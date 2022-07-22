@@ -13,7 +13,7 @@
 
 import { Field } from "formik";
 import { StyleSheet, Text, View } from "react-native";
-import ButtonShared from "../components/button/ButtonShared";
+import ButtonShared from "../shared/button/ButtonShared";
 import AppForm from "../components/form/AppForm";
 import AppFormField from "../components/form/AppFormField";
 import AppFormSubmitButton from "../components/form/AppFormSubmitButton";
@@ -74,10 +74,10 @@ const Login = ({ navigation }) => {
         title="Regístrate"
         onPress={handleOnGoSubmit}
         isValid={true}
+        color={"brown"}
       />
     </View>
   );
 };
-
 
 export default Login;

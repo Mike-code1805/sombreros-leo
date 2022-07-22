@@ -1,0 +1,6 @@
+export const brown = "#83541E";
+export const red = "#E9060E";
+export const blue = "#0044B2";
+export const green = "#178609";
+export const black = "black";
+export const white = "white";

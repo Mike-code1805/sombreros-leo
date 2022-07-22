@@ -1,26 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    padding: 5,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6,
-    fontFamily: "monospace",
-  },
-  errorText: {
-    color: "crimson",
-    fontWeight: "bold",
-    marginBottom: 10,
-    fontFamily: "monospace",
-  },
-});
+import * as color from "../../assets/stylesColor";
+import * as font from "../../assets/stylesFontFamily";
 
 const AppFormField = (props) => {
   const {
@@ -45,6 +26,7 @@ const AppFormField = (props) => {
         autoCorrect={false}
         value={value}
         {...inputProps}
+        
       />
       {hasError && <Text style={styles.errorText}>{errors[name]}</Text>}
     </View>
@@ -52,3 +34,30 @@ const AppFormField = (props) => {
 };
 
 export default AppFormField;
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    padding: 5,
+  },
+  input: {
+    borderWidth: 3,
+    borderRadius: 5,
+    backgroundColor: color.white,
+    borderColor: color.brown,
+    padding: 10,
+    fontSize: 18,
+    fontFamily: font.font,
+    shadowRadius: 10,
+    color: color.black,
+    shadowColor: color.brown,
+    shadowOpacity: 0.4,
+    elevation: 10,
+  },
+  errorText: {
+    color: "crimson",
+    fontWeight: "bold",
+    marginBottom: 10,
+    fontFamily: "monospace",
+  },
+});
