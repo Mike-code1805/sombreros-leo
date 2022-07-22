@@ -24,7 +24,7 @@ const Hats = ({ navigation }) => {
   };
 
   console.log(data);
-  
+
   return (
     <View style={styles.noteCard}>
       <View style={styles.header}>
@@ -67,8 +67,14 @@ const Hats = ({ navigation }) => {
             <Icon name="search" fill="white" style={styles.icon} />
           </ApplicationProvider>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.noteCard__search__container}>
-          <Text style={styles.noteCard__search__text}>Limpiar</Text>
+        <TouchableOpacity
+          style={styles.noteCard__search__container}
+          onPress={gotoAdd}
+        >
+          <IconRegistry icons={EvaIconsPack} />
+          <ApplicationProvider {...eva} theme={eva.light}>
+            <Icon name="settings-2-outline" fill="white" style={styles.icon} />
+          </ApplicationProvider>
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.noteCard__scrollView}>
@@ -82,14 +88,34 @@ const Hats = ({ navigation }) => {
           data.map((item, index) => (
             <View key={index} style={styles.noteCard__scrollView__hat}>
               <View style={styles.noteCard__scrollView__hat__note}>
-                <Text style={styles.noteCard__scrollView__hat__index}>
-                  {index + 1}
+                <View style={styles.noteCard__scrollView__hat__note__text}>
+                  <Text style={styles.noteCard__scrollView__hat__index}>
+                    {index + 1}.
+                  </Text>
+                  <Text style={styles.noteCard__scrollView__hat__text}>
+                    {item.name}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.noteCard__scrollView__hat__delete__container}
+                >
+                  <Text style={styles.noteCard__scrollView__hat__delete}>
+                    X
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.noteCard__scrollView__hat__date}>
+                <Text style={styles.noteCard__scrollView__hat__date__text}>
+                  Fecha: {item.date}
                 </Text>
-                <Text style={styles.noteCard__scrollView__hat__text}>
-                  {item.name}
-                </Text>
-                <TouchableOpacity>
-                  <Text>Limpiar</Text>
+                <TouchableOpacity
+                  style={styles.noteCard__scrollView__hat__date__edit}
+                >
+                  <Text
+                    style={styles.noteCard__scrollView__hat__date__edit__text}
+                  >
+                    Mirar
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -105,7 +131,7 @@ export default Hats;
 const styles = StyleSheet.create({
   noteCard: {
     padding: 10,
-    marginBottom: 70,
+    marginBottom: 40,
     flex: 1,
   },
   noteCard__text: {
@@ -219,10 +245,66 @@ const styles = StyleSheet.create({
     fontFamily: font.font,
   },
   noteCard__scrollView__hat: {
-    borderColor: color.red,
+    marginBottom: 20,
+    padding: 10,
+    opacity: 0.8,
+    color: color.black,
+    shadowColor: color.brown,
+    shadowOpacity: 0.4,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 10,
+    elevation: 5,
+    borderRadius: 5,
+    borderColor: color.brown,
     borderWidth: 3,
+    borderLeftWidth: 15,
   },
-  noteCard__scrollView__hat__note: {},
-  noteCard__scrollView__hat__index: {},
-  noteCard__scrollView__hat__text: {},
+  noteCard__scrollView__hat__note: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  noteCard__scrollView__hat__note__text: {
+    flexDirection: "row",
+  },
+  noteCard__scrollView__hat__index: {
+    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: font.font,
+  },
+  noteCard__scrollView__hat__text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    fontFamily: font.font,
+    marginLeft: 5,
+  },
+  noteCard__scrollView__hat__delete__container: {
+    justifyContent: "flex-end",
+  },
+  noteCard__scrollView__hat__delete: {
+    color: color.brown,
+    fontWeight: "bold",
+    fontSize: 18,
+    fontFamily: font.font,
+  },
+  noteCard__scrollView__hat__date: {
+    marginTop: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  noteCard__scrollView__hat__date__text: {
+    fontFamily: font.font,
+  },
+  noteCard__scrollView__hat__date__edit: {
+    justifyContent: "center",
+  },
+  noteCard__scrollView__hat__date__edit__text: {
+    color: color.brown,
+    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: font.font,
+  },
 });

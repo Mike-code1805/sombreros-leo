@@ -85,7 +85,18 @@ const AddHat = ({ navigation, ...props }) => {
           name="shape_or_pattern"
           placeholder="Forma o Modelo"
         />
-        <Text style={styles.addHat__text}>Estado de Pago: </Text>
+        <View style={styles.addHat__container}>
+          <Text style={styles.addHat__text}>Estado Pago: </Text>
+          <Text style={styles.addHat__text}>Pendiente</Text>
+          <Text style={styles.addHat__text__state}>
+            (p)
+          </Text>
+          <Text style={styles.addHat__text}> Cancelado</Text>
+          <Text style={styles.addHat__text__state}>
+           (c)
+          </Text>
+        </View>
+
         <Field
           component={AppFormField}
           name="state_payment"
@@ -110,8 +121,21 @@ const styles = StyleSheet.create({
   addHat__buttonClear: {
     marginBottom: 20,
   },
+  addHat__container: {
+    flexDirection: "row",
+    textAlign: "center",
+  },
   addHat__text: {
+    fontSize: 14,
     color: color.brown,
     fontFamily: font.font,
+    marginTop: "auto",
+    marginBottom: "auto",
+  },
+  addHat__text__state: {
+    fontSize: 16,
+    color: color.brown,
+    fontFamily: font.font,
+    fontWeight: "bold",
   },
 });
