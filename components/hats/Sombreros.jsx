@@ -14,7 +14,7 @@ import { ApplicationProvider, Icon, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { data } from "../../data";
 
-const Hats = ({ navigation }) => {
+const Sombreros = ({ navigation }) => {
   const gotoAdd = () => {
     navigation.navigate("AddHat");
   };
@@ -126,7 +126,7 @@ const Hats = ({ navigation }) => {
   );
 };
 
-export default Hats;
+export default Sombreros;
 
 const styles = StyleSheet.create({
   noteCard: {

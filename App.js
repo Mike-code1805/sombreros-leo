@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
 import AddHat from "./components/hats/AddHat";
-import Hats from "./components/hats/Hats";
+import Sombreros from "./components/hats/Sombreros";
 import Recicle from "./components/recicle/Recicle";
 
 import Login from "./screens/Login";
@@ -23,8 +23,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Hats">
-          {(props) => <Hats {...props} />}
+        <Stack.Screen name="Sombreros">
+          {(props) => <Sombreros {...props} />}
         </Stack.Screen>
         <Stack.Screen name="AddHat">
           {(props) => (

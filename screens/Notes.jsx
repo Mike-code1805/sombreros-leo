@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Hats from "../components/hats/Hats";
+import Sombreros from "../components/hats/Sombreros";
 
 const Notes = () => {
   return (
     <View>
-      <Hats />
+      <Sombreros />
     </View>
   );
 };

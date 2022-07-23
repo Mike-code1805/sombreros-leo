@@ -10,15 +10,17 @@ import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
 
 const AddHat = ({ navigation, ...props }) => {
-  const handleOnSubmitToLogin = async (values) => {
-    await props.setHat(values);
+  const handleOnSubmitToLogin = (values) => {
     if (values.name === "") {
       Alert.alert("Por favor escribe algo");
     } else {
       console.log(values);
-      await props.handleHat();
-      navigation.navigate("Hats");
+      navigation.navigate("Sombreros");
     }
+  };
+
+  const gotoAdd = ()  => {
+    navigation.navigate("Sombreros")
   };
 
   return (
@@ -26,16 +28,17 @@ const AddHat = ({ navigation, ...props }) => {
       <AppForm
         initialValues={{
           name: "",
-          color: "",
-          state: "",
-          tafalete: "",
+          color_hat: "",
           cintillo: "",
+          tafalete: "",
           measure: "",
           color_tape: "",
-          advancement: "",
+          size: "",
+          state: "",
           price: "",
+          advancement: "",
           address: "",
-          shape_or_pattern: "",
+          observations: "",
           state_payment: "",
         }}
         validationSchema={hatSchema}
@@ -43,21 +46,25 @@ const AddHat = ({ navigation, ...props }) => {
       >
         <Text style={styles.addHat__text}>Nombre: </Text>
         <Field component={AppFormField} name="name" placeholder="Nombre" />
-        <Text style={styles.addHat__text}>Color: </Text>
-        <Field component={AppFormField} name="color" placeholder="Color" />
-        <Text style={styles.addHat__text}>Estado: </Text>
-        <Field component={AppFormField} name="state" placeholder="Estado" />
-        <Text style={styles.addHat__text}>Tafalete: </Text>
+        <Text style={styles.addHat__text}>Color de Cinta: </Text>
+        <Field component={AppFormField} name="color_hat" placeholder="Color de Cinta" />
+        <Text style={styles.addHat__text}>Cintillo (si) (no): </Text>
+        <Field
+          component={AppFormField}
+          name="cintillo"
+          placeholder="Cintillo"
+        />
+        <Text style={styles.addHat__text}>Tafalete (si) (no): </Text>
         <Field
           component={AppFormField}
           name="tafalete"
           placeholder="Tafalete"
         />
-        <Text style={styles.addHat__text}>Cintillo: </Text>
+        <Text style={styles.addHat__text}>Medida(cm): </Text>
         <Field
           component={AppFormField}
-          name="cintillo"
-          placeholder="Cintillo"
+          name="measure"
+          placeholder="Medida(cm)"
         />
         <Text style={styles.addHat__text}>Color de Cinta: </Text>
         <Field
@@ -65,25 +72,33 @@ const AddHat = ({ navigation, ...props }) => {
           name="color_tape"
           placeholder="Color de Cinta"
         />
-        <Text style={styles.addHat__text}>Adelanto: </Text>
+        <Text style={styles.addHat__text}>Tamaño: </Text>
+        <Field
+          component={AppFormField}
+          name="size"
+          placeholder="Tamaño"
+        />
+        <Text style={styles.addHat__text}>Estado (1°) (2°) (3°) (4°): </Text>
+        <Field component={AppFormField} name="state" placeholder="Estado" />
+        <Text style={styles.addHat__text}>Precio (S/.): </Text>
+        <Field component={AppFormField} name="price" placeholder="Precio" />
+        <Text style={styles.addHat__text}>Adelanto (S/.): </Text>
         <Field
           component={AppFormField}
           name="advancement"
           placeholder="Adelanto"
         />
-        <Text style={styles.addHat__text}>Precio: </Text>
-        <Field component={AppFormField} name="price" placeholder="Precio" />
         <Text style={styles.addHat__text}>Domicilio: </Text>
         <Field
           component={AppFormField}
           name="address"
           placeholder="Domicilio"
         />
-        <Text style={styles.addHat__text}>Forma o Modelo: </Text>
+        <Text style={styles.addHat__text}>Observaciones: </Text>
         <Field
           component={AppFormField}
-          name="shape_or_pattern"
-          placeholder="Forma o Modelo"
+          name="observations"
+          placeholder="Observaciones"
         />
         <View style={styles.addHat__container}>
           <Text style={styles.addHat__text}>Estado Pago: </Text>
@@ -105,7 +120,7 @@ const AddHat = ({ navigation, ...props }) => {
         <AppFormSubmitButton title="Agregar" />
       </AppForm>
       <View style={styles.addHat__buttonClear}>
-        <ButtonShared title="Limpiar" color="green" />
+        <ButtonShared onPress={gotoAdd} title="Cancelar" color="red" />
       </View>
     </ScrollView>
   );
