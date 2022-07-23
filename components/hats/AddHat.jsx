@@ -19,8 +19,8 @@ const AddHat = ({ navigation, ...props }) => {
     }
   };
 
-  const gotoAdd = ()  => {
-    navigation.navigate("Sombreros")
+  const gotoAdd = () => {
+    navigation.navigate("Sombreros");
   };
 
   return (
@@ -46,8 +46,12 @@ const AddHat = ({ navigation, ...props }) => {
       >
         <Text style={styles.addHat__text}>Nombre: </Text>
         <Field component={AppFormField} name="name" placeholder="Nombre" />
-        <Text style={styles.addHat__text}>Color de Cinta: </Text>
-        <Field component={AppFormField} name="color_hat" placeholder="Color de Cinta" />
+        <Text style={styles.addHat__text}>Color de Sombrero: </Text>
+        <Field
+          component={AppFormField}
+          name="color_hat"
+          placeholder="Color de Sombrero"
+        />
         <Text style={styles.addHat__text}>Cintillo (si) (no): </Text>
         <Field
           component={AppFormField}
@@ -73,11 +77,7 @@ const AddHat = ({ navigation, ...props }) => {
           placeholder="Color de Cinta"
         />
         <Text style={styles.addHat__text}>Tamaño: </Text>
-        <Field
-          component={AppFormField}
-          name="size"
-          placeholder="Tamaño"
-        />
+        <Field component={AppFormField} name="size" placeholder="Tamaño" />
         <Text style={styles.addHat__text}>Estado (1°) (2°) (3°) (4°): </Text>
         <Field component={AppFormField} name="state" placeholder="Estado" />
         <Text style={styles.addHat__text}>Precio (S/.): </Text>
@@ -103,13 +103,9 @@ const AddHat = ({ navigation, ...props }) => {
         <View style={styles.addHat__container}>
           <Text style={styles.addHat__text}>Estado Pago: </Text>
           <Text style={styles.addHat__text}>Pendiente</Text>
-          <Text style={styles.addHat__text__state}>
-            (p)
-          </Text>
+          <Text style={styles.addHat__text__state}>(p)</Text>
           <Text style={styles.addHat__text}> Cancelado</Text>
-          <Text style={styles.addHat__text__state}>
-           (c)
-          </Text>
+          <Text style={styles.addHat__text__state}>(c)</Text>
         </View>
 
         <Field

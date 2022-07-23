@@ -1,93 +1,85 @@
 import { format } from "date-fns";
 
 export const data = [
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    {
-        name: "Mike",
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
-    },
-    
-]
+  {
+    name: "Mike",
+    color_hat: "Rojo",
+    cintillo: "si",
+    tafalete: "si",
+    measure: "1/4",
+    color_tape: "blanco",
+    size: "12",
+    state: "2",
+    price: "15",
+    advancement: "2",
+    address: "su casa",
+    observations: "1/4/54",
+    state_payment: "p",
+    date: format(new Date(), "yyyy-MM-dd, H:mma"),
+  },
+  {
+    name: "Mike",
+    color_hat: "Rojo",
+    cintillo: "si",
+    tafalete: "si",
+    measure: "1/4",
+    color_tape: "blanco",
+    size: "12",
+    state: "2",
+    price: "15",
+    advancement: "2",
+    address: "su casa",
+    observations: "1/4/54",
+    state_payment: "p",
+    date: format(new Date(), "yyyy-MM-dd, H:mma"),
+  },
+  {
+    name: "Mike",
+    color_hat: "Rojo",
+    cintillo: "si",
+    tafalete: "si",
+    measure: "1/4",
+    color_tape: "blanco",
+    size: "12",
+    state: "2",
+    price: "15",
+    advancement: "2",
+    address: "su casa",
+    observations: "1/4/54",
+    state_payment: "p",
+    date: format(new Date(), "yyyy-MM-dd, H:mma"),
+  },
+  {
+    name: "Mike",
+    color_hat: "Rojo",
+    cintillo: "si",
+    tafalete: "si",
+    measure: "1/4",
+    color_tape: "blanco",
+    size: "12",
+    state: "2",
+    price: "15",
+    advancement: "2",
+    address: "su casa",
+    observations: "1/4/54",
+    state_payment: "p",
+    date: format(new Date(), "yyyy-MM-dd, H:mma"),
+  },
+  {
+    name: "Mike",
+    color_hat: "Rojo",
+    cintillo: "si",
+    tafalete: "si",
+    measure: "1/4",
+    color_tape: "blanco",
+    size: "12",
+    state: "2",
+    price: "15",
+    advancement: "2",
+    address: "su casa",
+    observations: "1/4/54",
+    state_payment: "p",
+    date: format(new Date(), "yyyy-MM-dd, H:mma"),
+  },
+  
+];

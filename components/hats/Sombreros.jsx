@@ -23,6 +23,10 @@ const Sombreros = ({ navigation }) => {
     navigation.navigate("Recicle");
   };
 
+  const gotoDetails = () => {
+    navigation.navigate("DetailsHat");
+  };
+
   console.log(data);
 
   return (
@@ -110,6 +114,7 @@ const Sombreros = ({ navigation }) => {
                 </Text>
                 <TouchableOpacity
                   style={styles.noteCard__scrollView__hat__date__edit}
+                  onPress={gotoDetails}
                 >
                   <Text
                     style={styles.noteCard__scrollView__hat__date__edit__text}
