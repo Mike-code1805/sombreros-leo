@@ -15,7 +15,7 @@ export const hatSchema = yup.object({
   state: yup
     .number()
     .typeError("Solo se acepta números")
-    .oneOf([1, 2, 3, 4], 'Solo escriba "1", "2", "3" ó "4"'),
+    .oneOf([1, 2, 3, 4, 5], 'Solo escriba "1", "2", "3", "4" ó "5"'),
   price: yup.number().typeError("Solo se acepta números"),
   advancement: yup.number().typeError("Solo se acepta números"),
   address: yup.string(),

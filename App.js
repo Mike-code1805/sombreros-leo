@@ -5,9 +5,11 @@ import AddHat from "./components/hats/AddHat";
 import DetailsHat from "./components/hats/DetailsHat";
 import Sombreros from "./components/hats/Sombreros";
 import Recicle from "./components/recicle/Recicle";
-
 import Login from "./screens/Login";
 import * as color from "./assets/stylesColor";
+import { Provider } from "react-redux";
+import { persistor, store } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,29 +36,53 @@ export default function App() {
           },
           headerTitleStyle: {
             fontFamily: "monospace",
-
             fontWeight: "bold",
           },
         }}
       >
         <Stack.Screen name="Sombreros" options={{ title: "Sombreros" }}>
-          {(props) => <Sombreros {...props} />}
-        </Stack.Screen>
-        <Stack.Screen name="AddHat">
           {(props) => (
-            <AddHat
-              {...props}
-              hat={hat}
-              setHat={setHat}
-              handleHat={handleHat}
-            />
+            <Provider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                <Sombreros {...props} />
+              </PersistGate>
+            </Provider>
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="AddHat" options={{ title: "Añadir Sombrero" }}>
+          {(props) => (
+            <Provider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                <AddHat
+                  {...props}
+                  hat={hat}
+                  setHat={setHat}
+                  handleHat={handleHat}
+                />
+              </PersistGate>
+            </Provider>
           )}
         </Stack.Screen>
         <Stack.Screen name="Recicle">
-          {(props) => <Recicle {...props} />}
+          {(props) => (
+            <Provider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                <Recicle {...props} />
+              </PersistGate>
+            </Provider>
+          )}
         </Stack.Screen>
-        <Stack.Screen name="DetailsHat">
-          {(props) => <DetailsHat {...props} />}
+        <Stack.Screen
+          name="DetailsHat"
+          options={{ title: "Detalles del Sombrero" }}
+        >
+          {(props) => (
+            <Provider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                <DetailsHat {...props} />
+              </PersistGate>
+            </Provider>
+          )}
         </Stack.Screen>
         <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>

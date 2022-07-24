@@ -6,29 +6,44 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import * as eva from "@eva-design/eva";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
 import { ApplicationProvider, Icon, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { data } from "../../data";
+import { useDispatch, useSelector } from "react-redux";
+import { getHats } from "../../redux/apiCalls";
+import axios from "axios";
 
 const Sombreros = ({ navigation }) => {
   const gotoAdd = () => {
     navigation.navigate("AddHat");
   };
 
-  const gotoRecicle = () => {
+  const gotoRecicle = async () => {
     navigation.navigate("Recicle");
+    const res = await axios.get(`http://192.168.2.43:5000/api/hat`, {
+      headers: {
+        Authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZGM5MDE1ZWVmMzQ3ZmYzMjVhZDBlNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1ODYzMzc3MiwiZXhwIjoxNjU5MjM4NTcyfQ.0xMv6YdVux7444RjiWfUDlZiRgIqqgv1O5RuJD2IEXk",
+      },
+    });
+
+    console.log(res.data);
   };
 
   const gotoDetails = () => {
     navigation.navigate("DetailsHat");
   };
 
-  console.log(data);
-
+  const hat = useSelector((state) => state.hat);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getHats(dispatch);
+  }, [dispatch]);
+  console.log(hat);
   return (
     <View style={styles.noteCard}>
       <View style={styles.header}>
@@ -89,42 +104,82 @@ const Sombreros = ({ navigation }) => {
             </Text>
           </View>
         ) : (
-          data.map((item, index) => (
-            <View key={index} style={styles.noteCard__scrollView__hat}>
-              <View style={styles.noteCard__scrollView__hat__note}>
-                <View style={styles.noteCard__scrollView__hat__note__text}>
-                  <Text style={styles.noteCard__scrollView__hat__index}>
-                    {index + 1}.
-                  </Text>
-                  <Text style={styles.noteCard__scrollView__hat__text}>
-                    {item.name}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={styles.noteCard__scrollView__hat__delete__container}
-                >
-                  <Text style={styles.noteCard__scrollView__hat__delete}>
-                    X
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.noteCard__scrollView__hat__date}>
-                <Text style={styles.noteCard__scrollView__hat__date__text}>
-                  Fecha: {item.date}
-                </Text>
-                <TouchableOpacity
-                  style={styles.noteCard__scrollView__hat__date__edit}
-                  onPress={gotoDetails}
-                >
-                  <Text
-                    style={styles.noteCard__scrollView__hat__date__edit__text}
+          data.map((item, index) =>
+            item.state_payment == "p" ? (
+              <View key={index} style={styles.noteCard__scrollView__hat__p}>
+                <View style={styles.noteCard__scrollView__hat__note}>
+                  <View style={styles.noteCard__scrollView__hat__note__text}>
+                    <Text style={styles.noteCard__scrollView__hat__index}>
+                      {index + 1}.
+                    </Text>
+                    <Text style={styles.noteCard__scrollView__hat__text}>
+                      {item.name}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.noteCard__scrollView__hat__delete__container}
                   >
-                    Mirar
+                    <Text style={styles.noteCard__scrollView__hat__delete}>
+                      X
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.noteCard__scrollView__hat__date}>
+                  <Text style={styles.noteCard__scrollView__hat__date__text}>
+                    Fecha: {item.date}
                   </Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.noteCard__scrollView__hat__date__edit}
+                    onPress={gotoDetails}
+                  >
+                    <Text
+                      style={styles.noteCard__scrollView__hat__date__edit__text}
+                    >
+                      Mirar
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          ))
+            ) : (
+              <View key={index} style={styles.noteCard__scrollView__hat__c}>
+                <View style={styles.noteCard__scrollView__hat__note}>
+                  <View style={styles.noteCard__scrollView__hat__note__text}>
+                    <Text style={styles.noteCard__scrollView__hat__index}>
+                      {index + 1}.
+                    </Text>
+                    <Text style={styles.noteCard__scrollView__hat__text}>
+                      {item.name}
+                    </Text>
+                    <Text style={styles.noteCard__scrollView__hat__text__c}>
+                      (Cancelado)
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.noteCard__scrollView__hat__delete__container}
+                  >
+                    <Text style={styles.noteCard__scrollView__hat__delete}>
+                      X
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.noteCard__scrollView__hat__date}>
+                  <Text style={styles.noteCard__scrollView__hat__date__text}>
+                    Fecha: {item.date}
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.noteCard__scrollView__hat__date__edit}
+                    onPress={gotoDetails}
+                  >
+                    <Text
+                      style={styles.noteCard__scrollView__hat__date__edit__text}
+                    >
+                      Mirar
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )
+          )
         )}
       </ScrollView>
     </View>
@@ -249,7 +304,7 @@ const styles = StyleSheet.create({
     color: color.brown,
     fontFamily: font.font,
   },
-  noteCard__scrollView__hat: {
+  noteCard__scrollView__hat__p: {
     marginBottom: 20,
     padding: 10,
     opacity: 0.8,
@@ -267,6 +322,24 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderLeftWidth: 15,
   },
+  noteCard__scrollView__hat__c: {
+    marginBottom: 20,
+    padding: 10,
+    opacity: 0.8,
+    color: color.black,
+    shadowColor: color.brown,
+    shadowOpacity: 0.4,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 10,
+    elevation: 5,
+    borderRadius: 5,
+    borderColor: color.green,
+    borderWidth: 3,
+    borderLeftWidth: 15,
+  },
   noteCard__scrollView__hat__note: {
     flexDirection: "row",
     width: "100%",
@@ -274,17 +347,26 @@ const styles = StyleSheet.create({
   },
   noteCard__scrollView__hat__note__text: {
     flexDirection: "row",
+    width: "80%",
   },
   noteCard__scrollView__hat__index: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: font.font,
   },
   noteCard__scrollView__hat__text: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 13,
     fontFamily: font.font,
     marginLeft: 5,
+    width: "60%",
+  },
+  noteCard__scrollView__hat__text__c: {
+    fontWeight: "bold",
+    fontSize: 13,
+    fontFamily: font.font,
+    marginLeft: 5,
+    color: color.green,
   },
   noteCard__scrollView__hat__delete__container: {
     justifyContent: "flex-end",

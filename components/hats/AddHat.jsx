@@ -8,8 +8,12 @@ import AppFormSubmitButton from "../form/AppFormSubmitButton";
 import ButtonShared from "../../shared/button/ButtonShared";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
+import { useSelector } from "react-redux";
 
 const AddHat = ({ navigation, ...props }) => {
+  const hat = useSelector((state) => state.hat);
+  console.log(hat);
+
   const handleOnSubmitToLogin = (values) => {
     if (values.name === "") {
       Alert.alert("Por favor escribe algo");
