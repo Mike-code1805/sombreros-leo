@@ -1,16 +1,3 @@
-// import React from "react";
-// import { StyleSheet, Text, View } from "react-native";
-// import { Field } from "formik";
-// import AppForm from "./components/form/AppForm";
-// import AppFormField from "./components/form/AppFormField";
-// import AppFormSubmitButton from "./components/form/AppFormSubmitButton";
-// import loginValidation from "./validator/loginValidation";
-// import ButtonShared from "./components/button/ButtonShared";
-// import { useDispatch, useSelector } from "react-redux";
-// import { selectUsers } from "../redux/store";
-// import { register } from "../redux/apiCall";
-// import { StackActions } from "@react-navigation/native";
-
 import { Field } from "formik";
 import { StyleSheet, Text, View } from "react-native";
 import ButtonShared from "../shared/button/ButtonShared";

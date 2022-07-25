@@ -16,6 +16,7 @@ import { data } from "../../data";
 import { useDispatch, useSelector } from "react-redux";
 import { getHats } from "../../redux/apiCalls";
 import axios from "axios";
+import HatContainer from "./HatContainer";
 
 const Sombreros = ({ navigation }) => {
   const gotoAdd = () => {
@@ -43,6 +44,7 @@ const Sombreros = ({ navigation }) => {
   useEffect(() => {
     getHats(dispatch);
   }, [dispatch]);
+
   console.log(hat);
   return (
     <View style={styles.noteCard}>
@@ -105,79 +107,35 @@ const Sombreros = ({ navigation }) => {
           </View>
         ) : (
           data.map((item, index) =>
-            item.state_payment == "p" ? (
-              <View key={index} style={styles.noteCard__scrollView__hat__p}>
-                <View style={styles.noteCard__scrollView__hat__note}>
-                  <View style={styles.noteCard__scrollView__hat__note__text}>
-                    <Text style={styles.noteCard__scrollView__hat__index}>
-                      {index + 1}.
-                    </Text>
-                    <Text style={styles.noteCard__scrollView__hat__text}>
-                      {item.name}
-                    </Text>
-                  </View>
-                  <TouchableOpacity
-                    style={styles.noteCard__scrollView__hat__delete__container}
-                  >
-                    <Text style={styles.noteCard__scrollView__hat__delete}>
-                      X
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.noteCard__scrollView__hat__date}>
-                  <Text style={styles.noteCard__scrollView__hat__date__text}>
-                    Fecha: {item.date}
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.noteCard__scrollView__hat__date__edit}
-                    onPress={gotoDetails}
-                  >
-                    <Text
-                      style={styles.noteCard__scrollView__hat__date__edit__text}
-                    >
-                      Mirar
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+            item.state_payment == "p" && item.pendiente == true ? (
+              <HatContainer
+                state={"Pendiente"}
+                index={index}
+                name={item.name}
+                date={item.date}
+                onPressDelete={gotoDetails}
+                onPressMirar={gotoDetails}
+              />
+            ) : item.state_payment == "p" && item.pendiente == false ? (
+              <HatContainer
+                state={"Trabajado"}
+                color={"yellow"}
+                index={index}
+                name={item.name}
+                date={item.date}
+                onPressDelete={gotoDetails}
+                onPressMirar={gotoDetails}
+              />
             ) : (
-              <View key={index} style={styles.noteCard__scrollView__hat__c}>
-                <View style={styles.noteCard__scrollView__hat__note}>
-                  <View style={styles.noteCard__scrollView__hat__note__text}>
-                    <Text style={styles.noteCard__scrollView__hat__index}>
-                      {index + 1}.
-                    </Text>
-                    <Text style={styles.noteCard__scrollView__hat__text}>
-                      {item.name}
-                    </Text>
-                    <Text style={styles.noteCard__scrollView__hat__text__c}>
-                      (Cancelado)
-                    </Text>
-                  </View>
-                  <TouchableOpacity
-                    style={styles.noteCard__scrollView__hat__delete__container}
-                  >
-                    <Text style={styles.noteCard__scrollView__hat__delete}>
-                      X
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.noteCard__scrollView__hat__date}>
-                  <Text style={styles.noteCard__scrollView__hat__date__text}>
-                    Fecha: {item.date}
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.noteCard__scrollView__hat__date__edit}
-                    onPress={gotoDetails}
-                  >
-                    <Text
-                      style={styles.noteCard__scrollView__hat__date__edit__text}
-                    >
-                      Mirar
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              <HatContainer
+                state={"Cancelado"}
+                color={"green"}
+                index={index}
+                name={item.name}
+                date={item.date}
+                onPressDelete={gotoDetails}
+                onPressMirar={gotoDetails}
+              />
             )
           )
         )}
@@ -322,6 +280,24 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderLeftWidth: 15,
   },
+  noteCard__scrollView__hat__p__true: {
+    marginBottom: 20,
+    padding: 10,
+    opacity: 0.8,
+    color: color.black,
+    shadowColor: color.brown,
+    shadowOpacity: 0.4,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 10,
+    elevation: 5,
+    borderRadius: 5,
+    borderColor: color.yellow,
+    borderWidth: 3,
+    borderLeftWidth: 15,
+  },
   noteCard__scrollView__hat__c: {
     marginBottom: 20,
     padding: 10,
@@ -367,6 +343,20 @@ const styles = StyleSheet.create({
     fontFamily: font.font,
     marginLeft: 5,
     color: color.green,
+  },
+  noteCard__scrollView__hat__text__p: {
+    fontWeight: "bold",
+    fontSize: 13,
+    fontFamily: font.font,
+    marginLeft: 5,
+    color: color.brown,
+  },
+  noteCard__scrollView__hat__text__c__true: {
+    fontWeight: "bold",
+    fontSize: 13,
+    fontFamily: font.font,
+    marginLeft: 5,
+    color: color.yellow,
   },
   noteCard__scrollView__hat__delete__container: {
     justifyContent: "flex-end",

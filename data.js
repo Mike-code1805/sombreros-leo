@@ -17,6 +17,7 @@ export const data = [
     observations: "1/4/54",
     state_payment: "c",
     date: format(new Date(), "yyyy-MM-dd, H:mma"),
+    pendiente: false,
   },
   {
     id: "afsf123231rg1g112",
@@ -34,6 +35,7 @@ export const data = [
     observations: "1/4/54",
     state_payment: "p",
     date: format(new Date(), "yyyy-MM-dd, H:mma"),
+    pendiente: false,
   },
   {
     id: "afsf123231rg1g113",
@@ -51,6 +53,7 @@ export const data = [
     observations: "1/4/54",
     state_payment: "p",
     date: format(new Date(), "yyyy-MM-dd, H:mma"),
+    pendiente: true,
   },
   {
     id: "afsf123231rg1g114",
@@ -68,6 +71,7 @@ export const data = [
     observations: "1/4/54",
     state_payment: "p",
     date: format(new Date(), "yyyy-MM-dd, H:mma"),
+    pendiente: true,
   },
   {
     id: "afsf123231rg1g115",
@@ -85,6 +89,6 @@ export const data = [
     observations: "1/4/54",
     state_payment: "p",
     date: format(new Date(), "yyyy-MM-dd, H:mma"),
+    pendiente: true,
   },
-  
 ];
