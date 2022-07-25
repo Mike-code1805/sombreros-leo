@@ -2,8 +2,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
 
-const HatContainer = ({ ...props }) => {
-  const { color, state, index, name, date, onPressMirar, onPressDelete } = props;
+const HatContainer = ({
+  color,
+  state,
+  index,
+  name,
+  date,
+  onPressMirar,
+  onPressDelete,
+}) => {
   return (
     <View>
       <View
@@ -52,7 +59,9 @@ const HatContainer = ({ ...props }) => {
             style={styles.hatContainer__container__note__date__edit}
             onPress={onPressMirar}
           >
-            <Text style={styles.hatContainer__container__note__date__edit__text}>
+            <Text
+              style={styles.hatContainer__container__note__date__edit__text}
+            >
               Mirar
             </Text>
           </TouchableOpacity>

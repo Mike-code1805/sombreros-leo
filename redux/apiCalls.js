@@ -1,6 +1,15 @@
 // import { loginFailure, loginStart, loginSuccess, singupFailure, singupStart, singupSuccess } from "./userRedux";
-import { publicRequest, userRequest } from "../requestMethods";
-import { getHatFailure, getHatStart, getHatSuccess } from "./hatRedux";
+
+import { userRequest } from "../requestMethods";
+import {
+  addHatFailure,
+  addHatStart,
+  addHatSuccess,
+  getHatFailure,
+  getHatStart,
+  getHatSuccess,
+} from "./hatRedux";
+import getHatByIdService from "../services/getHatByIdService"
 
 // export const login = async (dispatch, user) => {
 //   dispatch(loginStart());
@@ -25,12 +34,21 @@ import { getHatFailure, getHatStart, getHatSuccess } from "./hatRedux";
 export const getHats = async (dispatch) => {
   dispatch(getHatStart());
   try {
-    console.log(userRequest.get("/api/hat"))
+    console.log("user: ", userRequest.get("/api/hat"));
     const res = await userRequest.get("/api/hat");
-    console.log("--------")
+    console.log("--------");
     dispatch(getHatSuccess(res.data));
   } catch (err) {
-    console.log(err)
+    console.log("err", err);
     dispatch(getHatFailure());
+  }
+};
+
+export const getHatById = async (id) => {
+  try {
+    const res = await getHatByIdService(id);
+    console.log("getHatById: ", res.data);
+  } catch (err) {
+    console.log(err);
   }
 };

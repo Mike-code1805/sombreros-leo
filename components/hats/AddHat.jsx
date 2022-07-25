@@ -8,18 +8,19 @@ import AppFormSubmitButton from "../form/AppFormSubmitButton";
 import ButtonShared from "../../shared/button/ButtonShared";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getHats } from "../../redux/apiCalls";
 
 const AddHat = ({ navigation, ...props }) => {
-  const hat = useSelector((state) => state.hat);
-  console.log(hat);
+  const dispatch = useDispatch();
 
-  const handleOnSubmitToLogin = (values) => {
+  const handleOnSubmitToAdd = (values) => {
     if (values.name === "") {
       Alert.alert("Por favor escribe algo");
     } else {
-      console.log(values);
       navigation.navigate("Sombreros");
+      console.log(values);
+      getHats(dispatch);
     }
   };
 
@@ -46,7 +47,7 @@ const AddHat = ({ navigation, ...props }) => {
           state_payment: "",
         }}
         validationSchema={hatSchema}
-        onSubmit={handleOnSubmitToLogin}
+        onSubmit={handleOnSubmitToAdd}
       >
         <Text style={styles.addHat__text}>Nombre: </Text>
         <Field component={AppFormField} name="name" placeholder="Nombre" />

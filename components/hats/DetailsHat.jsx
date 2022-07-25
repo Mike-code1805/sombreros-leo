@@ -1,106 +1,152 @@
 import {
+  ActivityIndicator,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
-import { data } from "../../data";
+import React, { useState } from "react";
 import * as eva from "@eva-design/eva";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry, Icon } from "@ui-kitten/components";
 
-const DetailsHat = () => {
+const DetailsHat = ({ ...props }) => {
   return (
     <ScrollView style={styles.details}>
-      <View style={styles.detailsHat}>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Nombre: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].name}</Text>
+      {props.loading ? (
+        <View style={styles.loader}>
+          <ActivityIndicator size={"large"} color={color.brown} />
         </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Fecha: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].date}</Text>
+      ) : (
+        <View style={styles.detailsHat}>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Nombre: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.name}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Fecha: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.date}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Color de Sombrero: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.color_hat}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Cintillo: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.cintillo}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Tafalete: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.tafalete}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Medida: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.measure}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Color de Cinta: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.color_tape}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Tamaño: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.size}cm
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Estado: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.state}°
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Precio: </Text>
+            <Text style={styles.detailsHat__text}>
+              S/.{props.dataCalled.hat.price}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Adelanto: </Text>
+            <Text style={styles.detailsHat__text}>
+              S/.{props.dataCalled.hat.advancement}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Domicilio: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.address}
+            </Text>
+          </View>
+          <View style={styles.detailsHat__container}>
+            <Text style={styles.detailsHat__textData}>Observaciones: </Text>
+            <Text style={styles.detailsHat__text}>
+              {props.dataCalled.hat.observations}
+            </Text>
+          </View>
+          {props.dataCalled.hat.pendiente ? (
+            <View style={styles.detailsHat__container}>
+              <Text style={styles.detailsHat__textData__worked}>
+                Pendiente De Trabajarlo
+              </Text>
+            </View>
+          ) : null}
+          {props.dataCalled.hat.state_payment === "c" ? (
+            <View style={styles.detailsHat__container}>
+              <Text style={styles.detailsHat__textData}>
+                Sombrero Pagado y Entregado
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.detailsHat__container}>
+              <Text style={styles.detailsHat__textData__pendiente}>
+                Sombrero Pendiente de Pago y Entrega
+              </Text>
+            </View>
+          )}
         </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Color de Sombrero: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].color_hat}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Cintillo: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].cintillo}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Tafalete: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].tafalete}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Medida: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].measure}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Color de Cinta: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].color_tape}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Tamaño: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].size}cm</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Estado: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].state}°</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Precio: </Text>
-          <Text style={styles.detailsHat__text}>S/.{data[0].price}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Adelanto: </Text>
-          <Text style={styles.detailsHat__text}>S/.{data[0].advancement}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Domicilio: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].address}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Observaciones: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].observations}</Text>
-        </View>
-        <View style={styles.detailsHat__container}>
-          <Text style={styles.detailsHat__textData}>Estado de Pago: </Text>
-          <Text style={styles.detailsHat__text}>{data[0].state_payment}</Text>
-        </View>
-      </View>
+      )}
+
       <View style={styles.detailsButtons}>
         <TouchableOpacity
-          style={styles.detailsButtons__cancel}
+          style={styles.prdetailsButtons__edit}
           // onPress={gotoDetails}
         >
           <Text style={styles.detailsButtons__style__text}>Editar</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
-          style={styles.detailsButtons__statePay}
-          // onPress={gotoAdd}
+          style={styles.prdetailsButtons__pay}
+          // onPress={gotoDetails}
         >
-          <Text style={styles.detailsButtons__style__text}>Cancelado</Text>
-          <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={eva.light}>
-            <Icon name="checkmark-outline" fill="white" style={styles.icon} />
-          </ApplicationProvider>
+          <Text style={styles.detailsButtons__style__text}>Entregado</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.detailsButtons__delete}
-          // onPress={gotoAdd}
+          style={styles.prdetailsButtons__work}
+          // onPress={gotoDetails}
+        >
+          <Text style={styles.detailsButtons__style__text}>Trabajado</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.prdetailsButtons__delete}
+          // onPress={gotoDetails}
         >
           <Text style={styles.detailsButtons__style__text}>Eliminar</Text>
-          <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={eva.light}>
-            <Icon name="trash-2-outline" fill="white" style={styles.icon} />
-          </ApplicationProvider>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -110,6 +156,12 @@ const DetailsHat = () => {
 export default DetailsHat;
 
 const styles = StyleSheet.create({
+  loader: {
+    padding: 100,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   details: {
     padding: 10,
   },
@@ -143,50 +195,70 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
+  detailsHat__textData__pendiente: {
+    color: color.green,
+    fontFamily: font.font,
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  detailsHat__textData__worked: {
+    color: color.yellow,
+    fontFamily: font.font,
+    fontWeight: "bold",
+    fontSize: 18,
+  },
   detailsButtons: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    width: "80%",
     justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
-  detailsButtons__cancel: {
+  prdetailsButtons__edit: {
+    width: 120,
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: color.brown,
     borderRadius: 5,
-    padding: 5,
+    padding: 10,
     margin: 5,
   },
-  detailsButtons__statePay: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  prdetailsButtons__pay: {
+    width: 120,
+    justifyContent: "center",
     textAlign: "center",
     backgroundColor: color.green,
     borderRadius: 5,
-    padding: 5,
-    width: 120,
+    padding: 10,
     margin: 5,
   },
-  detailsButtons__delete: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  prdetailsButtons__work: {
+    width: 120,
+    justifyContent: "center",
+    textAlign: "center",
+    backgroundColor: color.yellow,
+    borderRadius: 5,
+    padding: 10,
+    margin: 5,
+  },
+  prdetailsButtons__delete: {
+    width: 120,
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: color.red,
     borderRadius: 5,
-    padding: 5,
-    width: 110,
+    padding: 10,
     margin: 5,
   },
   detailsButtons__style__text: {
+    marginLeft: "auto",
+    marginRight: "auto",
     color: color.white,
     fontWeight: "bold",
     fontSize: 16,
     fontFamily: font.font,
-    marginTop: "auto",
-    marginBottom: "auto",
-  },
-  icon: {
-    width: 25,
-    height: 25,
     marginTop: "auto",
     marginBottom: "auto",
   },

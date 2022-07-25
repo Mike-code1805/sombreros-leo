@@ -1,5 +1,4 @@
 import axios from "axios";
-import { PORT } from "@env";
 
 // const BASE_URL = REACT_APP_PORT;
 // const TOKEN =
@@ -11,12 +10,12 @@ import { PORT } from "@env";
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZGM5MDE1ZWVmMzQ3ZmYzMjVhZDBlNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1ODYzMzc3MiwiZXhwIjoxNjU5MjM4NTcyfQ.0xMv6YdVux7444RjiWfUDlZiRgIqqgv1O5RuJD2IEXk";
 export const publicRequest = axios.create({
-  baseURL: PORT,
+  baseURL: "http://192.168.2.74:5000",
 });
-
+console.log("http://192.168.2.74:5000")
 export const userRequest = axios.create({
-  baseURL: `${PORT}`,
+  baseURL: "http://192.168.2.74:5000",
   headers: {
-    "Authorization": `${TOKEN}`,
+    Authorization: `${TOKEN}`,
   },
 });
