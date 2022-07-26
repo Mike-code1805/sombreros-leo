@@ -112,6 +112,8 @@ const Sombreros = ({ navigation, ...props }) => {
                   try {
                     navigation.navigate("DetailsHat");
                     const res = await getHatByIdService(item._id);
+                    props.setIsDone(item.pendiente);
+                    props.setIsPay(item.state_payment);
                     props.setDataCalled(res.data);
                     props.setId(item._id);
                     props.setLoading(false);
@@ -131,6 +133,8 @@ const Sombreros = ({ navigation, ...props }) => {
                 onPressMirar={async () => {
                   try {
                     navigation.navigate("DetailsHat");
+                    props.setIsDone(item.pendiente);
+                    props.setIsPay(item.state_payment);
                     props.setId(item._id);
                     const res = await getHatByIdService(item._id);
                     props.setDataCalled(res.data);
@@ -152,6 +156,8 @@ const Sombreros = ({ navigation, ...props }) => {
                   try {
                     navigation.navigate("DetailsHat");
                     const res = await getHatByIdService(item._id);
+                    props.setIsDone(item.pendiente);
+                    props.setIsPay(item.state_payment);
                     props.setDataCalled(res.data);
                     props.setId(item._id);
                     props.setLoading(false);

@@ -10,17 +10,36 @@ import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
 import { useDispatch } from "react-redux";
 import { getHats } from "../../redux/apiCalls";
+import { format } from "date-fns";
+import createHatService from "../../services/createHatService";
 
 const AddHat = ({ navigation, ...props }) => {
   const dispatch = useDispatch();
 
-  const handleOnSubmitToAdd = (values) => {
+  const handleOnSubmitToAdd = async (values) => {
     if (values.name === "") {
       Alert.alert("Por favor escribe algo");
     } else {
-      navigation.navigate("Sombreros");
-      console.log(values);
+      const objectToSent = {
+        name: values.name,
+        color_hat: values.color_hat,
+        cintillo: values.cintillo,
+        tafalete: values.tafalete,
+        measure: values.measure,
+        color_tape: values.color_tape,
+        size: values.size,
+        state: values.state,
+        price: values.price,
+        advancement: values.advancement,
+        address: values.address,
+        observations: values.observations,
+        state_payment: values.state_payment,
+        date: format(new Date(), "yyyy-MM-dd, H:mma"),
+        pendiente: true,
+      };
+      await createHatService(objectToSent);
       getHats(dispatch);
+      navigation.navigate("Sombreros");
     }
   };
 

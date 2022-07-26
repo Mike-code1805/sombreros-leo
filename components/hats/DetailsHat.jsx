@@ -6,14 +6,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
-import * as eva from "@eva-design/eva";
+import React from "react";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import { ApplicationProvider, IconRegistry, Icon } from "@ui-kitten/components";
+
 
 const DetailsHat = ({ ...props }) => {
+
   return (
     <ScrollView style={styles.details}>
       {props.loading ? (
@@ -55,7 +54,7 @@ const DetailsHat = ({ ...props }) => {
           <View style={styles.detailsHat__container}>
             <Text style={styles.detailsHat__textData}>Medida: </Text>
             <Text style={styles.detailsHat__text}>
-              {props.dataCalled.hat.measure}
+              {props.dataCalled.hat.measure}cm
             </Text>
           </View>
           <View style={styles.detailsHat__container}>
@@ -67,7 +66,7 @@ const DetailsHat = ({ ...props }) => {
           <View style={styles.detailsHat__container}>
             <Text style={styles.detailsHat__textData}>Tamaño: </Text>
             <Text style={styles.detailsHat__text}>
-              {props.dataCalled.hat.size}cm
+              {props.dataCalled.hat.size}
             </Text>
           </View>
           <View style={styles.detailsHat__container}>
@@ -132,18 +131,21 @@ const DetailsHat = ({ ...props }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.prdetailsButtons__pay}
+          disabled={props.isPay === "p" ? false : true}
           // onPress={gotoDetails}
         >
           <Text style={styles.detailsButtons__style__text}>Entregado</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.prdetailsButtons__work}
+          disabled={props.isDone ? false : true}
           // onPress={gotoDetails}
         >
           <Text style={styles.detailsButtons__style__text}>Trabajado</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.prdetailsButtons__delete}
+
           // onPress={gotoDetails}
         >
           <Text style={styles.detailsButtons__style__text}>Eliminar</Text>

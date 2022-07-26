@@ -13,6 +13,8 @@ export const MainRouter = () => {
   const [id, setId] = useState("");
   const [dataCalled, setDataCalled] = useState();
   const [loading, setLoading] = useState(true);
+  const [isDone, setIsDone] = useState();
+  const [isPay, setIsPay] = useState();
 
   return (
     <NavigationContainer>
@@ -24,6 +26,8 @@ export const MainRouter = () => {
               setId={setId}
               setDataCalled={setDataCalled}
               setLoading={setLoading}
+              setIsDone={setIsDone}
+              setIsPay={setIsPay}
             />
           )}
         </Stack.Screen>
@@ -43,6 +47,8 @@ export const MainRouter = () => {
               id={id}
               dataCalled={dataCalled}
               loading={loading}
+              isDone={isDone}
+              isPay={isPay}
             />
           )}
         </Stack.Screen>
