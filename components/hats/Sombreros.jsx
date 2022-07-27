@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,7 @@ import { getHats } from "../../redux/apiCalls";
 import HatContainer from "./HatContainer";
 
 import getHatByIdService from "../../services/getHatByIdService";
+import deleteHatService from "../../services/deleteHatService";
 
 const Sombreros = ({ navigation, ...props }) => {
   const [loading, setLoading] = useState(false);
@@ -120,6 +122,31 @@ const Sombreros = ({ navigation, ...props }) => {
                     console.log(error);
                   }
                 }}
+                onPressDelete={async () => {
+                  try {
+                    Alert.alert(
+                      "Borrar sombrero",
+                      "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
+                      [
+                        {
+                          text: "No",
+                          onPress: () => console.log("cancelado"),
+                          style: "cancel",
+                        },
+                        {
+                          text: "Si",
+                          onPress: async () => {
+                            await deleteHatService(item._id);
+                            getHats(dispatch);
+                            navigation.navigate("Sombreros");
+                          },
+                        },
+                      ]
+                    );
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
               />
             ) : item.state_payment == "p" && item.pendiente == false ? (
               <HatContainer
@@ -142,6 +169,31 @@ const Sombreros = ({ navigation, ...props }) => {
                     console.log(error);
                   }
                 }}
+                onPressDelete={async () => {
+                  try {
+                    Alert.alert(
+                      "Borrar sombrero",
+                      "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
+                      [
+                        {
+                          text: "No",
+                          onPress: () => console.log("cancelado"),
+                          style: "cancel",
+                        },
+                        {
+                          text: "Si",
+                          onPress: async () => {
+                            await deleteHatService(item._id);
+                            getHats(dispatch);
+                            navigation.navigate("Sombreros");
+                          },
+                        },
+                      ]
+                    );
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
               />
             ) : (
               <HatContainer
@@ -160,6 +212,31 @@ const Sombreros = ({ navigation, ...props }) => {
                     props.setDataCalled(res.data);
                     props.setId(item._id);
                     props.setLoading(false);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+                onPressDelete={async () => {
+                  try {
+                    Alert.alert(
+                      "Borrar sombrero",
+                      "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
+                      [
+                        {
+                          text: "No",
+                          onPress: () => console.log("cancelado"),
+                          style: "cancel",
+                        },
+                        {
+                          text: "Si",
+                          onPress: async () => {
+                            await deleteHatService(item._id);
+                            getHats(dispatch);
+                            navigation.navigate("Sombreros");
+                          },
+                        },
+                      ]
+                    );
                   } catch (error) {
                     console.log(error);
                   }
