@@ -13,9 +13,8 @@ import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
 import { ApplicationProvider, Icon, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import { data } from "../../data";
 import { useDispatch, useSelector } from "react-redux";
-import { getHatById, getHats } from "../../redux/apiCalls";
+import { getHats } from "../../redux/apiCalls";
 import HatContainer from "./HatContainer";
 
 import getHatByIdService from "../../services/getHatByIdService";
@@ -65,7 +64,7 @@ const Sombreros = ({ navigation, ...props }) => {
           </View>
         </View>
       </View>
-      <Text style={styles.noteCard__text}>Total: 1</Text>
+      <Text style={styles.noteCard__text}>Total: {array.length}</Text>
       <View style={styles.noteCard__divider} />
       <View style={styles.noteCard__search}>
         <TextInput
@@ -80,11 +79,11 @@ const Sombreros = ({ navigation, ...props }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.noteCard__search__container}
-          onPress={gotoAdd}
+          onPress={() => getHats(dispatch)}
         >
           <IconRegistry icons={EvaIconsPack} />
           <ApplicationProvider {...eva} theme={eva.light}>
-            <Icon name="settings-2-outline" fill="white" style={styles.icon} />
+            <Icon name="refresh-outline" fill="white" style={styles.icon} />
           </ApplicationProvider>
         </TouchableOpacity>
       </View>

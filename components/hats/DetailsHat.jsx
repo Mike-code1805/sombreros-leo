@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,10 +10,73 @@ import {
 import React from "react";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
+import editHatService from "../../services/editHatService";
+import { useDispatch } from "react-redux";
+import getHatByIdService from "../../services/getHatByIdService";
+import { getHats } from "../../redux/apiCalls";
+import deleteHatService from "../../services/deleteHatService";
 
+const DetailsHat = ({ navigation, ...props }) => {
+  const dispatch = useDispatch();
+  const onPressState_Payment = async () => {
+    try {
+      const state_PaymentCancel = {
+        state_payment: "c",
+      };
+      await editHatService(props.id, state_PaymentCancel);
+      const res = await getHatByIdService(props.id);
+      props.setDataCalled(res.data);
+      getHats(dispatch);
+      props.setIsPay(res.data.hat.state_payment);
+      navigation.navigate("DetailsHat");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-const DetailsHat = ({ ...props }) => {
+  const onPressPendiente = async () => {
+    try {
+      const state_pendiente = {
+        pendiente: false,
+      };
+      await editHatService(props.id, state_pendiente);
+      const res = await getHatByIdService(props.id);
+      props.setDataCalled(res.data);
+      getHats(dispatch);
+      props.setIsDone(res.data.hat.pendiente);
+      navigation.navigate("DetailsHat");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const onPressDelete = async () => {
+    try {
+      Alert.alert(
+        "Borrar sombrero",
+        "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
+        [
+          {
+            text: "No",
+            onPress: () => console.log("cancelado"),
+            style: "cancel",
+          },
+          {
+            text: "Si",
+            onPress: async () => {
+              const res = await deleteHatService(props.id);
+              console.log(res.data);
+              getHats(dispatch);
+              navigation.navigate("Sombreros");
+              console.log("Borrado");
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ScrollView style={styles.details}>
       {props.loading ? (
@@ -125,28 +189,27 @@ const DetailsHat = ({ ...props }) => {
       <View style={styles.detailsButtons}>
         <TouchableOpacity
           style={styles.prdetailsButtons__edit}
-          // onPress={gotoDetails}
+          onPress={() => navigation.navigate("EditHat")}
         >
           <Text style={styles.detailsButtons__style__text}>Editar</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.prdetailsButtons__pay}
           disabled={props.isPay === "p" ? false : true}
-          // onPress={gotoDetails}
+          onPress={onPressState_Payment}
         >
           <Text style={styles.detailsButtons__style__text}>Entregado</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.prdetailsButtons__work}
           disabled={props.isDone ? false : true}
-          // onPress={gotoDetails}
+          onPress={onPressPendiente}
         >
           <Text style={styles.detailsButtons__style__text}>Trabajado</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.prdetailsButtons__delete}
-
-          // onPress={gotoDetails}
+          onPress={onPressDelete}
         >
           <Text style={styles.detailsButtons__style__text}>Eliminar</Text>
         </TouchableOpacity>

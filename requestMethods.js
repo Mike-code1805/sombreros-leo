@@ -12,9 +12,9 @@ const TOKEN =
 export const publicRequest = axios.create({
   baseURL: "http://192.168.2.74:5000",
 });
-console.log("http://192.168.2.74:5000")
+console.log("http://192.168.2.43:5000")
 export const userRequest = axios.create({
-  baseURL: "http://192.168.2.74:5000",
+  baseURL: "http://192.168.2.43:5000",
   headers: {
     Authorization: `${TOKEN}`,
   },

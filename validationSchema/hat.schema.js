@@ -22,5 +22,5 @@ export const hatSchema = yup.object({
   observations: yup.string(),
   state_payment: yup
     .string()
-    .oneOf(["c", "p", "C", "P"], 'Solo escriba "p" ó "c"'),
+    .oneOf(["c", "p", "C", "P"], 'Solo escriba "p" ó "c"').required("Se requiere el estado de pago del sombrero"),
 });

@@ -1,24 +1,39 @@
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import AppForm from "../form/AppForm";
-import { hatSchema } from "../../validationSchema/hat.schema";
 import { Field } from "formik";
 import AppFormField from "../form/AppFormField";
 import AppFormSubmitButton from "../form/AppFormSubmitButton";
 import ButtonShared from "../../shared/button/ButtonShared";
+import { hatSchema } from "../../validationSchema/hat.schema";
 import * as color from "../../assets/stylesColor";
 import * as font from "../../assets/stylesFontFamily";
+import { format } from "date-fns";
+import getHatByIdService from "../../services/getHatByIdService";
+import editHatService from "../../services/editHatService";
 import { useDispatch } from "react-redux";
 import { getHats } from "../../redux/apiCalls";
-import { format } from "date-fns";
-import createHatService from "../../services/createHatService";
 
-const AddHat = ({ navigation, ...props }) => {
+const EdiHat = ({ navigation, ...props }) => {
   const dispatch = useDispatch();
 
-  const handleOnSubmitToAdd = async (values) => {
-    if (values.name === "") {
-      Alert.alert("Por favor escribe algo");
+  const handleOnSubmitToEdit = async (values) => {
+    if (
+      values.name === props.dataCalled.hat.name &&
+      values.color_hat === props.dataCalled.hat.color_hat &&
+      values.cintillo === props.dataCalled.hat.cintillo &&
+      values.tafalete === props.dataCalled.hat.tafalete &&
+      values.measure === props.dataCalled.hat.measure &&
+      values.color_tape === props.dataCalled.hat.color_tape &&
+      values.size === props.dataCalled.hat.size &&
+      values.state === props.dataCalled.hat.state &&
+      values.price === props.dataCalled.hat.price &&
+      values.advancement === props.dataCalled.hat.advancement &&
+      values.address === props.dataCalled.hat.address &&
+      values.observations === props.dataCalled.hat.observations &&
+      values.state_payment === props.dataCalled.hat.state_payment
+    ) {
+      Alert.alert("Por favor escriba lo que desea editar");
     } else {
       const objectToSent = {
         name: values.name,
@@ -37,92 +52,106 @@ const AddHat = ({ navigation, ...props }) => {
         date: format(new Date(), "yyyy-MM-dd, H:mma"),
         pendiente: true,
       };
-      await createHatService(objectToSent);
+      await editHatService(props.id, objectToSent);
+      const res = await getHatByIdService(props.id);
+      props.setDataCalled(res.data);
       getHats(dispatch);
-      navigation.navigate("Sombreros");
+      navigation.navigate("DetailsHat");
     }
   };
-
-  const gotoAdd = () => {
-    navigation.navigate("Sombreros");
-  };
-
+  console.log(props.id);
   return (
     <ScrollView style={styles.addHat}>
       <AppForm
         initialValues={{
-          name: "",
-          color_hat: "",
-          cintillo: "",
-          tafalete: "",
-          measure: "",
-          color_tape: "",
-          size: "",
-          state: "",
-          price: "",
-          advancement: "",
-          address: "",
-          observations: "",
-          state_payment: "",
+          name: props.dataCalled.hat.name,
+          color_hat: props.dataCalled.hat.color_hat,
+          cintillo: props.dataCalled.hat.cintillo,
+          tafalete: props.dataCalled.hat.tafalete,
+          measure: props.dataCalled.hat.measure,
+          color_tape: props.dataCalled.hat.color_tape,
+          size: props.dataCalled.hat.size,
+          state: props.dataCalled.hat.state,
+          price: props.dataCalled.hat.price,
+          advancement: props.dataCalled.hat.advancement,
+          address: props.dataCalled.hat.address,
+          observations: props.dataCalled.hat.observations,
+          state_payment: props.dataCalled.hat.state_payment,
         }}
         validationSchema={hatSchema}
-        onSubmit={handleOnSubmitToAdd}
+        onSubmit={handleOnSubmitToEdit}
       >
         <Text style={styles.addHat__text}>Nombre: </Text>
-        <Field component={AppFormField} name="name" placeholder="Nombre" />
+        <Field
+          component={AppFormField}
+          name="name"
+          placeholder={props.dataCalled.hat.name}
+        />
         <Text style={styles.addHat__text}>Color de Sombrero: </Text>
         <Field
           component={AppFormField}
           name="color_hat"
-          placeholder="Color de Sombrero"
+          placeholder={props.dataCalled.hat.color_hat}
         />
         <Text style={styles.addHat__text}>Cintillo (si) (no): </Text>
         <Field
           component={AppFormField}
           name="cintillo"
-          placeholder="Cintillo"
+          placeholder={props.dataCalled.hat.cintillo}
         />
         <Text style={styles.addHat__text}>Tafalete (si) (no): </Text>
         <Field
           component={AppFormField}
           name="tafalete"
-          placeholder="Tafalete"
+          placeholder={props.dataCalled.hat.tafalete}
         />
         <Text style={styles.addHat__text}>Medida(cm): </Text>
         <Field
           component={AppFormField}
           name="measure"
-          placeholder="Medida(cm)"
+          placeholder={`${props.dataCalled.hat.measure}cm`}
         />
         <Text style={styles.addHat__text}>Color de Cinta: </Text>
         <Field
           component={AppFormField}
           name="color_tape"
-          placeholder="Color de Cinta"
+          placeholder={`${props.dataCalled.hat.color_tape}`}
         />
         <Text style={styles.addHat__text}>Tamaño: </Text>
-        <Field component={AppFormField} name="size" placeholder="Tamaño" />
+        <Field
+          component={AppFormField}
+          name="size"
+          placeholder={`${props.dataCalled.hat.size}`}
+        />
         <Text style={styles.addHat__text}>Estado (1°) (2°) (3°) (4°): </Text>
-        <Field component={AppFormField} name="state" placeholder="Estado" />
+        <Field
+          component={AppFormField}
+          name="state"
+          placeholder={`${props.dataCalled.hat.state}°`}
+        />
         <Text style={styles.addHat__text}>Precio (S/.): </Text>
-        <Field component={AppFormField} name="price" placeholder="Precio" />
+        <Field
+          component={AppFormField}
+          name="price"
+          placeholder={`S/.${props.dataCalled.hat.price}`}
+        />
         <Text style={styles.addHat__text}>Adelanto (S/.): </Text>
         <Field
           component={AppFormField}
           name="advancement"
-          placeholder="Adelanto"
+          placeholder={`S/.${props.dataCalled.hat.advancement}`}
         />
         <Text style={styles.addHat__text}>Domicilio: </Text>
         <Field
           component={AppFormField}
           name="address"
-          placeholder="Domicilio"
+          placeholder={`${props.dataCalled.hat.color_tape}`}
         />
         <Text style={styles.addHat__text}>Observaciones: </Text>
         <Field
           component={AppFormField}
           name="observations"
-          placeholder="Observaciones"
+          placeholder={`${props.dataCalled.hat.color_tape}`}
         />
         <View style={styles.addHat__container}>
           <Text style={styles.addHat__text}>Estado Pago: </Text>
@@ -135,18 +164,22 @@ const AddHat = ({ navigation, ...props }) => {
         <Field
           component={AppFormField}
           name="state_payment"
-          placeholder="Estado de Pago"
+          placeholder={`${props.dataCalled.hat.color_tape}`}
         />
-        <AppFormSubmitButton title="Agregar" />
+        <AppFormSubmitButton title="Editar" />
       </AppForm>
       <View style={styles.addHat__buttonClear}>
-        <ButtonShared onPress={gotoAdd} title="Cancelar" color="red" />
+        <ButtonShared
+          onPress={() => navigation.goBack()}
+          title="Cancelar"
+          color="red"
+        />
       </View>
     </ScrollView>
   );
 };
 
-export default AddHat;
+export default EdiHat;
 
 const styles = StyleSheet.create({
   addHat: {

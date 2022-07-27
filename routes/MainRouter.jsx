@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "../screens/Login";
@@ -6,6 +6,9 @@ import Sombreros from "../components/hats/Sombreros";
 import AddHat from "../components/hats/AddHat";
 import Recicle from "../components/recicle/Recicle";
 import DetailsHat from "../components/hats/DetailsHat";
+import EdiHat from "../components/hats/EdiHat";
+import * as color from "../assets/stylesColor";
+import * as font from "../assets/stylesFontFamily";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +21,21 @@ export const MainRouter = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: color.brown_light,
+            textDecorationLine: "underline",
+            textDecorationStyle: "solid",
+          },
+          headerTitleStyle: {
+            fontFamily: font.font,
+
+            fontWeight: "bold",
+          },
+        }}
+      >
         <Stack.Screen name="Sombreros" options={{ title: "Sombreros" }}>
           {(props) => (
             <Sombreros
@@ -46,7 +63,25 @@ export const MainRouter = () => {
               {...props}
               id={id}
               dataCalled={dataCalled}
+              setDataCalled={setDataCalled}
               loading={loading}
+              setIsDone={setIsDone}
+              setIsPay={setIsPay}
+              isDone={isDone}
+              isPay={isPay}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen
+          name="EditHat"
+          options={{ title: "Modificar Sombrero" }}
+        >
+          {(props) => (
+            <EdiHat
+              {...props}
+              id={id}
+              dataCalled={dataCalled}
+              setDataCalled={setDataCalled}
               isDone={isDone}
               isPay={isPay}
             />
