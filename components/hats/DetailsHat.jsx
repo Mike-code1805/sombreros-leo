@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import getHatByIdService from "../../services/getHatByIdService";
 import { getHats } from "../../redux/apiCalls";
 import deleteHatService from "../../services/deleteHatService";
+import createHatRecicleService from "../../services/hatRecicle/createHatRecicleService";
 
 const DetailsHat = ({ navigation, ...props }) => {
   const dispatch = useDispatch();
@@ -64,6 +65,8 @@ const DetailsHat = ({ navigation, ...props }) => {
           {
             text: "Si",
             onPress: async () => {
+              const resHat = await getHatByIdService(props.id);
+              await createHatRecicleService(resHat.data.hat);
               const res = await deleteHatService(props.id);
               console.log(res.data);
               getHats(dispatch);

@@ -15,11 +15,12 @@ import * as font from "../../assets/stylesFontFamily";
 import { ApplicationProvider, Icon, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getHats } from "../../redux/apiCalls";
+import { getHats, getHatsRecicle } from "../../redux/apiCalls";
 import HatContainer from "./HatContainer";
 
 import getHatByIdService from "../../services/getHatByIdService";
 import deleteHatService from "../../services/deleteHatService";
+import createHatRecicleService from "../../services/hatRecicle/createHatRecicleService";
 
 const Sombreros = ({ navigation, ...props }) => {
   const [loading, setLoading] = useState(false);
@@ -30,11 +31,13 @@ const Sombreros = ({ navigation, ...props }) => {
 
   const gotoRecicle = async () => {
     navigation.navigate("Recicle");
+    getHatsRecicle(dispatch);
   };
   const hat = useSelector((state) => state.hat.hats);
   const dispatch = useDispatch();
   useEffect(() => {
     getHats(dispatch);
+    getHatsRecicle(dispatch);
   }, [dispatch]);
   const array = hat.slice().reverse();
   return (
@@ -126,7 +129,7 @@ const Sombreros = ({ navigation, ...props }) => {
                   try {
                     Alert.alert(
                       "Borrar sombrero",
-                      "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
+                      "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
                       [
                         {
                           text: "No",
@@ -136,6 +139,8 @@ const Sombreros = ({ navigation, ...props }) => {
                         {
                           text: "Si",
                           onPress: async () => {
+                            const res = await getHatByIdService(item._id);
+                            await createHatRecicleService(res.data.hat);
                             await deleteHatService(item._id);
                             getHats(dispatch);
                             navigation.navigate("Sombreros");
@@ -173,7 +178,7 @@ const Sombreros = ({ navigation, ...props }) => {
                   try {
                     Alert.alert(
                       "Borrar sombrero",
-                      "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
+                      "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
                       [
                         {
                           text: "No",
@@ -183,6 +188,8 @@ const Sombreros = ({ navigation, ...props }) => {
                         {
                           text: "Si",
                           onPress: async () => {
+                            const res = await getHatByIdService(item._id);
+                            await createHatRecicleService(res.data.hat);
                             await deleteHatService(item._id);
                             getHats(dispatch);
                             navigation.navigate("Sombreros");
@@ -220,7 +227,7 @@ const Sombreros = ({ navigation, ...props }) => {
                   try {
                     Alert.alert(
                       "Borrar sombrero",
-                      "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
+                      "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
                       [
                         {
                           text: "No",
@@ -230,6 +237,8 @@ const Sombreros = ({ navigation, ...props }) => {
                         {
                           text: "Si",
                           onPress: async () => {
+                            const res = await getHatByIdService(item._id);
+                            await createHatRecicleService(res.data.hat);
                             await deleteHatService(item._id);
                             getHats(dispatch);
                             navigation.navigate("Sombreros");

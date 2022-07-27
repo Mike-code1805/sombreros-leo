@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import hatReducer from "./hatRedux";
+import hatRecicleReducer from "./hatRecicleRedux";
 import {
   persistStore,
   persistReducer,
@@ -19,7 +20,7 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 
-const rootReducer = combineReducers({ hat: hatReducer });
+const rootReducer = combineReducers({ hat: hatReducer, hatRecicle: hatRecicleReducer });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

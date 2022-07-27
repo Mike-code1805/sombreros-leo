@@ -8,6 +8,7 @@ const HatContainer = ({
   index,
   name,
   date,
+  toSee = true,
   onPressMirar,
   onPressDelete,
 }) => {
@@ -59,11 +60,20 @@ const HatContainer = ({
             style={styles.hatContainer__container__note__date__edit}
             onPress={onPressMirar}
           >
-            <Text
+            {toSee ? (
+              <Text
               style={styles.hatContainer__container__note__date__edit__text}
             >
               Mirar
             </Text>
+            ) : (
+              <Text
+              style={styles.hatContainer__container__note__date__edit__text}
+            >
+              Salvar
+            </Text>
+            )}
+            
           </TouchableOpacity>
         </View>
       </View>

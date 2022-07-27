@@ -1,72 +1,72 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const oneHatSlice = createSlice({
-  name: "hat",
+export const hatRecicleSlice = createSlice({
+  name: "hatRecicle",
   initialState: {
-    hats: [],
+    hatsRecicle: [],
     isFetching: false,
     error: false,
   },
   reducers: {
     //GET ALL
-    getHatStart: (state) => {
+    getHatRecicleStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
-    getHatSuccess: (state, action) => {
+    getHatRecicleSuccess: (state, action) => {
       state.isFetching = false;
-      state.hats = action.payload;
+      state.hatsRecicle = action.payload;
     },
-    getHatFailure: (state) => {
+    getHatRecicleFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
     //DELETE
-    deleteHatStart: (state) => {
+    deleteHatRecicleStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
-    deleteHatSuccess: (state, action) => {
+    deleteHatRecicleSuccess: (state, action) => {
       state.isFetching = false;
-      state.hats.splice(
-        state.hats.findIndex((item) => item._id === action.payload),
+      state.hatsRecicle.splice(
+        state.hatsRecicle.findIndex((item) => item._id === action.payload),
         1
       );
     },
-    deleteHatFailure: (state) => {
+    deleteHatRecicleFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
     //UPDATE
-    updateHatStart: (state) => {
+    updateHatRecicleStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
-    updateHatSuccess: (state, action) => {
+    updateHatRecicleSuccess: (state, action) => {
       state.isFetching = false;
-      state.hats[
+      state.hatsRecicle[
         state.hats.findIndex((item) => item._id === action.payload.id)
       ] = action.payload.Hat;
     },
-    updateHatFailure: (state) => {
+    updateHatRecicleFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
     //CREATE
-    addHatStart: (state) => {
+    addHatRecicleStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
-    addHatSuccess: (state, action) => {
+    addHatRecicleSuccess: (state, action) => {
       state.isFetching = false;
-      state.hats.push(action.payload);
+      state.hatsRecicle.push(action.payload);
     },
-    addHatFailure: (state) => {
+    addHatRecicleFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
-    clearHats: (state) => {
-      state.hats = [];
+    clearHatsRecicle: (state) => {
+      state.hatsRecicle = [];
       state.isFetching = false;
       state.error = false;
     },
@@ -74,10 +74,10 @@ export const oneHatSlice = createSlice({
 });
 
 export const {
-  getHatStart,
-  getHatSuccess,
-  getHatFailure,
-  clearHats,
-} = oneHatSlice.actions;
+  getHatRecicleStart,
+  getHatRecicleSuccess,
+  getHatRecicleFailure,
+  clearHatsRecicle,
+} = hatRecicleSlice.actions;
 
-export default oneHatSlice.reducer;
+export default hatRecicleSlice.reducer;
