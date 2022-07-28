@@ -24,6 +24,7 @@ import createHatRecicleService from "../../services/hatRecicle/createHatRecicleS
 
 const Sombreros = ({ navigation, ...props }) => {
   const [loading, setLoading] = useState(false);
+  const [searchField, setSearchField] = useState("");
 
   const gotoAdd = () => {
     navigation.navigate("AddHat");
@@ -39,7 +40,23 @@ const Sombreros = ({ navigation, ...props }) => {
     getHats(dispatch);
     getHatsRecicle(dispatch);
   }, [dispatch]);
+
   const array = hat.slice().reverse();
+
+  console.log("searchField-> ", searchField);
+
+  const handlePressSearch = () => {
+    const filteredHats = array.filter((item) => {
+      console.log("item.name.toLowerCase()-> ", item.name.toLowerCase());
+      console.log("item.date.toLowerCase()-> ", item.date.toLowerCase());
+      return (
+        item.name.toLowerCase().includes(searchField.toLowerCase()) ||
+        item.date.toLowerCase().includes(searchField.toLowerCase())
+      );
+    });
+    console.log("filteredHats-> ", filteredHats);
+  };
+
   return (
     <View style={styles.noteCard}>
       <View style={styles.header}>
@@ -75,8 +92,14 @@ const Sombreros = ({ navigation, ...props }) => {
         <TextInput
           placeholder="Buscar..."
           style={styles.noteCard__search__input}
+          onChangeText={(text) => setSearchField(text)}
+          // value={value}
+          // onChange={(e) => setSearchField(e.target.value)}
         ></TextInput>
-        <TouchableOpacity style={styles.noteCard__search__container}>
+        <TouchableOpacity
+          style={styles.noteCard__search__container}
+          onPress={handlePressSearch}
+        >
           <IconRegistry icons={EvaIconsPack} />
           <ApplicationProvider {...eva} theme={eva.light}>
             <Icon name="search" fill="white" style={styles.icon} />
