@@ -25,7 +25,8 @@ import createHatRecicleService from "../../services/hatRecicle/createHatRecicleS
 const Sombreros = ({ navigation, ...props }) => {
   const [loading, setLoading] = useState(false);
   const [searchField, setSearchField] = useState("");
-
+  const [active, setActive] = useState(false);
+  const [array, setArray] = useState([]);
   const gotoAdd = () => {
     navigation.navigate("AddHat");
   };
@@ -39,21 +40,18 @@ const Sombreros = ({ navigation, ...props }) => {
   useEffect(() => {
     getHats(dispatch);
     getHatsRecicle(dispatch);
+    setArray(hat.slice().reverse());
   }, [dispatch]);
 
-  const array = hat.slice().reverse();
-
   console.log("searchField-> ", searchField);
-
   const handlePressSearch = () => {
     const filteredHats = array.filter((item) => {
-      console.log("item.name.toLowerCase()-> ", item.name.toLowerCase());
-      console.log("item.date.toLowerCase()-> ", item.date.toLowerCase());
       return (
         item.name.toLowerCase().includes(searchField.toLowerCase()) ||
         item.date.toLowerCase().includes(searchField.toLowerCase())
       );
     });
+    setArray(filteredHats);
     console.log("filteredHats-> ", filteredHats);
   };
 
@@ -89,13 +87,37 @@ const Sombreros = ({ navigation, ...props }) => {
       <Text style={styles.noteCard__text}>Total: {array.length}</Text>
       <View style={styles.noteCard__divider} />
       <View style={styles.noteCard__search}>
-        <TextInput
-          placeholder="Buscar..."
-          style={styles.noteCard__search__input}
-          onChangeText={(text) => setSearchField(text)}
-          // value={value}
-          // onChange={(e) => setSearchField(e.target.value)}
-        ></TextInput>
+        <View style={styles.noteCard__search__input__container}>
+          <TextInput
+            placeholder="Buscar..."
+            style={styles.noteCard__search__input}
+            onChangeText={(text) => {
+              setSearchField(text);
+              setActive(true);
+            }}
+            value={searchField}
+            // onChange={(e) => setSearchField(e.target.value)}
+          />
+
+          <TouchableOpacity
+            style={styles.noteCard__search__button}
+            onPress={() => {
+              setActive(false);
+              setSearchField("");
+              setArray(hat.slice().reverse());
+            }}
+          >
+            <Text
+              style={
+                active
+                  ? styles.noteCard__search__button__text__active
+                  : styles.noteCard__search__button__text__inactive
+              }
+            >
+              X
+            </Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={styles.noteCard__search__container}
           onPress={handlePressSearch}
@@ -320,10 +342,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
   },
-  noteCard__search__input: {
+  noteCard__search__input__container: {
     height: 40,
     width: "65%",
-    paddingHorizontal: 10,
+    flexDirection: "row-reverse",
+  },
+  noteCard__search__input: {
+    height: 40,
+    width: "100%",
+    paddingLeft: 10,
+    paddingRight: 60,
     fontWeight: "bold",
     opacity: 0.8,
     fontSize: 18,
@@ -341,6 +369,36 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 5,
     fontFamily: font.font,
+  },
+  noteCard__search__button: {
+    zIndex: 1,
+    position: "absolute",
+    width: "15%",
+    height: 40,
+    flexDirection: "row-reverse",
+    paddingHorizontal: 5,
+  },
+  noteCard__search__button__text__inactive: {
+    color: color.brown,
+    fontWeight: "bold",
+    fontSize: 28,
+    fontFamily: font.font,
+    width: "90%",
+    height: 40,
+    marginTop: "auto",
+    marginBottom: "auto",
+    opacity: 0,
+  },
+  noteCard__search__button__text__active: {
+    color: color.brown,
+    fontWeight: "bold",
+    fontSize: 28,
+    fontFamily: font.font,
+    width: "90%",
+    height: 40,
+    marginTop: "auto",
+    marginBottom: "auto",
+    opacity: 1,
   },
   header: {
     flexDirection: "row",
