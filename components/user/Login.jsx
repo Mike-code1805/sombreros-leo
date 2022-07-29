@@ -1,29 +1,16 @@
 import { Field } from "formik";
 import { StyleSheet, Text, View } from "react-native";
-import ButtonShared from "../shared/button/ButtonShared";
-import AppForm from "../components/form/AppForm";
-import AppFormField from "../components/form/AppFormField";
-import AppFormSubmitButton from "../components/form/AppFormSubmitButton";
-import { loginSchema } from "../validationSchema/login.schema";
+import ButtonShared from "../../shared/button/ButtonShared";
+import { loginSchema } from "../../validationSchema/login.schema";
+import AppForm from "../form/AppForm";
+import AppFormField from "../form/AppFormField";
+import AppFormSubmitButton from "../form/AppFormSubmitButton";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    paddingTop: 60,
-    padding: 10,
-  },
-  text: {
-    textDecorationLine: "underline",
-    fontWeight: "bold",
-    fontFamily: "monospace",
-    fontSize: 20,
-  },
-});
-const Login = ({ navigation }) => {
+const Login = ({ navigation, ...props }) => {
 
   const handleOnSubmitToLogin = (values) => {
     console.log(values);
+    
   };
 
   const handleOnGoSubmit = () => {
@@ -68,3 +55,18 @@ const Login = ({ navigation }) => {
 };
 
 export default Login;
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "flex-start",
+      paddingTop: 60,
+      padding: 10,
+    },
+    text: {
+      textDecorationLine: "underline",
+      fontWeight: "bold",
+      fontFamily: "monospace",
+      fontSize: 20,
+    },
+  });

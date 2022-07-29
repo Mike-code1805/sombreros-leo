@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "../screens/Login";
+
 import Sombreros from "../components/hats/Sombreros";
 import AddHat from "../components/hats/AddHat";
 import Recicle from "../components/recicle/Recicle";
 import DetailsHat from "../components/hats/DetailsHat";
 import EdiHat from "../components/hats/EdiHat";
+import Login from "../components/user/Login";
 import * as color from "../assets/stylesColor";
 import * as font from "../assets/stylesFontFamily";
+import Register from "../components/user/Register";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +38,12 @@ export const MainRouter = () => {
           },
         }}
       >
+        <Stack.Screen name="Login" options={{ title: "Bienvenido...!" }}>
+          {(props) => <Login {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="Register" options={{ title: "Registrate...!" }}>
+          {(props) => <Register {...props} />}
+        </Stack.Screen>
         <Stack.Screen name="Sombreros" options={{ title: "Sombreros" }}>
           {(props) => (
             <Sombreros
@@ -51,7 +59,10 @@ export const MainRouter = () => {
         <Stack.Screen name="AddHat" options={{ title: "Añadir Sombrero" }}>
           {(props) => <AddHat {...props} />}
         </Stack.Screen>
-        <Stack.Screen name="Recicle">
+        <Stack.Screen
+          name="Recicle"
+          options={{ title: "Papelera de Sombreros" }}
+        >
           {(props) => <Recicle {...props} />}
         </Stack.Screen>
         <Stack.Screen
@@ -72,10 +83,7 @@ export const MainRouter = () => {
             />
           )}
         </Stack.Screen>
-        <Stack.Screen
-          name="EditHat"
-          options={{ title: "Modificar Sombrero" }}
-        >
+        <Stack.Screen name="EditHat" options={{ title: "Modificar Sombrero" }}>
           {(props) => (
             <EdiHat
               {...props}
@@ -87,7 +95,6 @@ export const MainRouter = () => {
             />
           )}
         </Stack.Screen>
-        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -21,227 +21,267 @@ const Recicle = ({ navigation, ...props }) => {
   const dispatch = useDispatch();
   const hatRecicle = useSelector((state) => state.hatRecicle.hatsRecicle);
   const array = hatRecicle.slice().reverse();
-
+  const handlePressGoBack = () => {
+    try {
+      Alert.alert(
+        "Recuperar TODOS los sombreros",
+        "¿Estás seguro que deseas restaurar todos los sombreros?",
+        [
+          {
+            text: "No",
+            onPress: () => console.log("cancelado"),
+            style: "cancel",
+          },
+          {
+            text: "Si",
+            onPress: async () => {
+              navigation.navigate("Sombreros");
+              const res = await getHatRecicleByIdService(item._id);
+              await createHatService(res.data.HatRecicle);
+              await deleteHatRecicleService(item._id);
+              getHats(dispatch);
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <ScrollView style={styles.re}>
+    <View style={styles.r}>
       <View style={styles.reci}>
         <View style={styles.recicle}>
           <View style={styles.recicle__undo}>
             <TouchableOpacity style={styles.recicle__undo__container}>
-              <Text style={styles.recicle__undo__text}>Recuperar</Text>
+              <Text style={styles.recicle__undo__text}>Regresar</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.recicle__text}>Total: 0</Text>
+          <Text style={styles.recicle__text}>Total: {array.length}</Text>
           <View style={styles.recicle__undo}>
             <TouchableOpacity style={styles.recicle__undo__container}>
-              <Text style={styles.recicle__undo__text}>Vaciar</Text>
+              <Text style={styles.recicle__undo__text}>Recargar</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.divider} />
       </View>
-      {array.map((item, index) =>
-        item.state_payment == "p" && item.pendiente == true ? (
-          <HatContainer
-            key={item._id}
-            state={"Pendiente"}
-            index={index}
-            name={item.name}
-            date={item.date}
-            toSee={false}
-            onPressMirar={async () => {
-              try {
-                Alert.alert(
-                  "Recuperar sombrero",
-                  "¿Estás seguro que deseas restaurar el sombrero?",
-                  [
-                    {
-                      text: "No",
-                      onPress: () => console.log("cancelado"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "Si",
-                      onPress: async () => {
-                        navigation.navigate("Sombreros");
-                        const res = await getHatRecicleByIdService(item._id);
-                        await createHatService(res.data.HatRecicle);
-                        await deleteHatRecicleService(item._id);
-                        getHats(dispatch);
+      <ScrollView style={styles.re}>
+        {array.map((item, index) =>
+          item.state_payment == "p" && item.pendiente == true ? (
+            <HatContainer
+              key={item._id}
+              state={"Pendiente"}
+              index={index}
+              name={item.name}
+              date={item.date}
+              toSee={false}
+              onPressMirar={async () => {
+                try {
+                  Alert.alert(
+                    "Recuperar sombrero",
+                    "¿Estás seguro que deseas restaurar el sombrero?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("cancelado"),
+                        style: "cancel",
                       },
-                    },
-                  ]
-                );
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-            onPressDelete={async () => {
-              try {
-                Alert.alert(
-                  "Borrar sombrero permanentemente",
-                  "¿Estás seguro que deseas eliminar el sombrero permanentemente?",
-                  [
-                    {
-                      text: "No",
-                      onPress: () => console.log("cancelado"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "Si",
-                      onPress: async () => {
-                        const res = await getHatRecicleByIdService(item._id);
-                        await createHatDeletedPermanently(res.data.HatRecicle);
-                        await deleteHatRecicleService(item._id);
-                        getHatsRecicle(dispatch);
-                        navigation.navigate("Recicle");
+                      {
+                        text: "Si",
+                        onPress: async () => {
+                          navigation.navigate("Sombreros");
+                          const res = await getHatRecicleByIdService(item._id);
+                          await createHatService(res.data.HatRecicle);
+                          await deleteHatRecicleService(item._id);
+                          getHats(dispatch);
+                        },
                       },
-                    },
-                  ]
-                );
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          />
-        ) : item.state_payment == "p" && item.pendiente == false ? (
-          <HatContainer
-            key={item._id}
-            state={"Trabajado"}
-            color={"yellow"}
-            index={index}
-            name={item.name}
-            date={item.date}
-            toSee={false}
-            onPressMirar={async () => {
-              try {
-                Alert.alert(
-                  "Recuperar sombrero",
-                  "¿Estás seguro que deseas restaurar el sombrero?",
-                  [
-                    {
-                      text: "No",
-                      onPress: () => console.log("cancelado"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "Si",
-                      onPress: async () => {
-                        navigation.navigate("Sombreros");
-                        const res = await getHatRecicleByIdService(item._id);
-                        await createHatService(res.data.HatRecicle);
-                        await deleteHatRecicleService(item._id);
-                        getHats(dispatch);
+                    ]
+                  );
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+              onPressDelete={async () => {
+                try {
+                  Alert.alert(
+                    "Borrar sombrero permanentemente",
+                    "¿Estás seguro que deseas eliminar el sombrero permanentemente?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("cancelado"),
+                        style: "cancel",
                       },
-                    },
-                  ]
-                );
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-            onPressDelete={async () => {
-              try {
-                Alert.alert(
-                  "Borrar sombrero permanentemente",
-                  "¿Estás seguro que deseas eliminar el sombrero permanentemente?",
-                  [
-                    {
-                      text: "No",
-                      onPress: () => console.log("cancelado"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "Si",
-                      onPress: async () => {
-                        const res = await getHatRecicleByIdService(item._id);
-                        await createHatDeletedPermanently(res.data.HatRecicle);
-                        await deleteHatRecicleService(item._id);
-                        getHatsRecicle(dispatch);
-                        navigation.navigate("Recicle");
+                      {
+                        text: "Si",
+                        onPress: async () => {
+                          const res = await getHatRecicleByIdService(item._id);
+                          await createHatDeletedPermanently(
+                            res.data.HatRecicle
+                          );
+                          await deleteHatRecicleService(item._id);
+                          getHatsRecicle(dispatch);
+                          navigation.navigate("Recicle");
+                        },
                       },
-                    },
-                  ]
-                );
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          />
-        ) : (
-          <HatContainer
-            key={item._id}
-            state={"Cancelado"}
-            color={"green"}
-            index={index}
-            name={item.name}
-            date={item.date}
-            toSee={false}
-            onPressMirar={async () => {
-              try {
-                Alert.alert(
-                  "Recuperar sombrero",
-                  "¿Estás seguro que deseas restaurar el sombrero?",
-                  [
-                    {
-                      text: "No",
-                      onPress: () => console.log("cancelado"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "Si",
-                      onPress: async () => {
-                        navigation.navigate("Sombreros");
-                        const res = await getHatRecicleByIdService(item._id);
-                        await createHatService(res.data.HatRecicle);
-                        await deleteHatRecicleService(item._id);
-                        getHats(dispatch);
+                    ]
+                  );
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            />
+          ) : item.state_payment == "p" && item.pendiente == false ? (
+            <HatContainer
+              key={item._id}
+              state={"Trabajado"}
+              color={"yellow"}
+              index={index}
+              name={item.name}
+              date={item.date}
+              toSee={false}
+              onPressMirar={async () => {
+                try {
+                  Alert.alert(
+                    "Recuperar sombrero",
+                    "¿Estás seguro que deseas restaurar el sombrero?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("cancelado"),
+                        style: "cancel",
                       },
-                    },
-                  ]
-                );
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-            onPressDelete={async () => {
-              try {
-                Alert.alert(
-                  "Borrar sombrero permanentemente",
-                  "¿Estás seguro que deseas eliminar el sombrero permanentemente?",
-                  [
-                    {
-                      text: "No",
-                      onPress: () => console.log("cancelado"),
-                      style: "cancel",
-                    },
-                    {
-                      text: "Si",
-                      onPress: async () => {
-                        const res = await getHatRecicleByIdService(item._id);
-                        await createHatDeletedPermanently(res.data.HatRecicle);
-                        await deleteHatRecicleService(item._id);
-                        getHatsRecicle(dispatch);
-                        navigation.navigate("Recicle");
+                      {
+                        text: "Si",
+                        onPress: async () => {
+                          navigation.navigate("Sombreros");
+                          const res = await getHatRecicleByIdService(item._id);
+                          await createHatService(res.data.HatRecicle);
+                          await deleteHatRecicleService(item._id);
+                          getHats(dispatch);
+                        },
                       },
-                    },
-                  ]
-                );
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          />
-        )
-      )}
-    </ScrollView>
+                    ]
+                  );
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+              onPressDelete={async () => {
+                try {
+                  Alert.alert(
+                    "Borrar sombrero permanentemente",
+                    "¿Estás seguro que deseas eliminar el sombrero permanentemente?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("cancelado"),
+                        style: "cancel",
+                      },
+                      {
+                        text: "Si",
+                        onPress: async () => {
+                          const res = await getHatRecicleByIdService(item._id);
+                          await createHatDeletedPermanently(
+                            res.data.HatRecicle
+                          );
+                          await deleteHatRecicleService(item._id);
+                          getHatsRecicle(dispatch);
+                          navigation.navigate("Recicle");
+                        },
+                      },
+                    ]
+                  );
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            />
+          ) : (
+            <HatContainer
+              key={item._id}
+              state={"Cancelado"}
+              color={"green"}
+              index={index}
+              name={item.name}
+              date={item.date}
+              toSee={false}
+              onPressMirar={async () => {
+                try {
+                  Alert.alert(
+                    "Recuperar sombrero",
+                    "¿Estás seguro que deseas restaurar el sombrero?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("cancelado"),
+                        style: "cancel",
+                      },
+                      {
+                        text: "Si",
+                        onPress: async () => {
+                          navigation.navigate("Sombreros");
+                          const res = await getHatRecicleByIdService(item._id);
+                          await createHatService(res.data.HatRecicle);
+                          await deleteHatRecicleService(item._id);
+                          getHats(dispatch);
+                        },
+                      },
+                    ]
+                  );
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+              onPressDelete={async () => {
+                try {
+                  Alert.alert(
+                    "Borrar sombrero permanentemente",
+                    "¿Estás seguro que deseas eliminar el sombrero permanentemente?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("cancelado"),
+                        style: "cancel",
+                      },
+                      {
+                        text: "Si",
+                        onPress: async () => {
+                          const res = await getHatRecicleByIdService(item._id);
+                          await createHatDeletedPermanently(
+                            res.data.HatRecicle
+                          );
+                          await deleteHatRecicleService(item._id);
+                          getHatsRecicle(dispatch);
+                          navigation.navigate("Recicle");
+                        },
+                      },
+                    ]
+                  );
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            />
+          )
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
 export default Recicle;
 
 const styles = StyleSheet.create({
+  r:{
+    marginBottom: 150,
+  },
   re: {
+    padding: 10,
+  },
+  reci:{
     padding: 10,
   },
   recicle: {
