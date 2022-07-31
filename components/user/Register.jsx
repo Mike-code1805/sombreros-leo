@@ -5,7 +5,8 @@ import { registerSchema } from "../../validationSchema/register.schema";
 import AppForm from "../form/AppForm";
 import AppFormField from "../form/AppFormField";
 import AppFormSubmitButton from "../form/AppFormSubmitButton";
-
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Register = ({ navigation, ...props }) => {
   // const state = useSelector(selectUsers);
@@ -19,7 +20,6 @@ const Register = ({ navigation, ...props }) => {
   //     } catch (error) {}
   //   }
   // };
-
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Registro:</Text>

@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import hatReducer from "./hatRedux";
 import hatRecicleReducer from "./hatRecicleRedux";
+import userReducer from "./userRedux";
 import {
   persistStore,
   persistReducer,
@@ -13,14 +14,17 @@ import {
 } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 const persistConfig = {
   key: "root",
   version: 1,
   storage: AsyncStorage,
 };
 
-const rootReducer = combineReducers({ hat: hatReducer, hatRecicle: hatRecicleReducer });
+const rootReducer = combineReducers({
+  user: userReducer,
+  hat: hatReducer,
+  hatRecicle: hatRecicleReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

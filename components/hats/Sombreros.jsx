@@ -21,13 +21,22 @@ import HatContainer from "./HatContainer";
 import getHatByIdService from "../../services/getHatByIdService";
 import deleteHatService from "../../services/deleteHatService";
 import createHatRecicleService from "../../services/hatRecicle/createHatRecicleService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Sombreros = ({ navigation, ...props }) => {
+  const hat = useSelector((state) => state.hat.hats);
+  const stateUser = useSelector((state) => state.user.currentUser);
   const [loading, setLoading] = useState(false);
   const [searchField, setSearchField] = useState("");
   const [active, setActive] = useState(false);
   const [array, setArray] = useState([]);
-  const gotoAdd = () => {
+
+  const sendUser = async () => {
+    console.log("sendUser");
+    await AsyncStorage.setItem("token", stateUser.token.authToken);
+  };
+
+  const gotoAdd = async () => {
     navigation.navigate("AddHat");
   };
 
@@ -35,12 +44,13 @@ const Sombreros = ({ navigation, ...props }) => {
     navigation.navigate("Recicle");
     getHatsRecicle(dispatch);
   };
-  const hat = useSelector((state) => state.hat.hats);
+
   const dispatch = useDispatch();
   useEffect(() => {
     getHats(dispatch);
     getHatsRecicle(dispatch);
     setArray(hat.slice().reverse());
+    sendUser();
   }, [dispatch]);
 
   console.log("searchField-> ", searchField);

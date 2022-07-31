@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const registerSchema = yup.object({
-  name: yup
+  username: yup
     .string()
     .required("Es necesario un Nombre")
     .max(10, "El nombre no debe tener más de 10 carateres"),

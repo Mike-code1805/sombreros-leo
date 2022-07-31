@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { format } from "date-fns";
 
 export const data = [
@@ -110,3 +111,15 @@ export const data = [
     pendiente: false,
   },
 ];
+
+export const tokenUser = async (key) => {
+  try {
+    const data = await AsyncStorage.getItem(key);
+    if (data !== null) {
+      console.log(data);
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
