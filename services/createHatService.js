@@ -1,4 +1,4 @@
-import { userRequest } from "../requestMethods";
+import userRequest from "../requestMethods";
 
 const createHatService = async (hat) => {
   try {

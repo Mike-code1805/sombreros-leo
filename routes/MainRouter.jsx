@@ -11,6 +11,7 @@ import Login from "../components/user/Login";
 import * as color from "../assets/stylesColor";
 import * as font from "../assets/stylesFontFamily";
 import Register from "../components/user/Register";
+import Welcome from "../components/welcome/Welcome";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +34,6 @@ export const MainRouter = () => {
           },
           headerTitleStyle: {
             fontFamily: font.font,
-
             fontWeight: "bold",
           },
         }}
@@ -43,6 +43,9 @@ export const MainRouter = () => {
         </Stack.Screen>
         <Stack.Screen name="Register" options={{ title: "Registrate...!" }}>
           {(props) => <Register {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="Welcome" options={{ title: "Bienvenido...!" }}>
+          {(props) => <Welcome {...props} />}
         </Stack.Screen>
         <Stack.Screen name="Sombreros" options={{ title: "Sombreros" }}>
           {(props) => (

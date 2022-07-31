@@ -17,30 +17,25 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getHats, getHatsRecicle } from "../../redux/apiCalls";
 import HatContainer from "./HatContainer";
-
 import getHatByIdService from "../../services/getHatByIdService";
 import deleteHatService from "../../services/deleteHatService";
 import createHatRecicleService from "../../services/hatRecicle/createHatRecicleService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import ButtonShared from "../../shared/button/ButtonShared";
 
 const Sombreros = ({ navigation, ...props }) => {
   const hat = useSelector((state) => state.hat.hats);
   const stateUser = useSelector((state) => state.user.currentUser);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchField, setSearchField] = useState("");
   const [active, setActive] = useState(false);
   const [array, setArray] = useState([]);
 
-  const sendUser = async () => {
-    console.log("sendUser");
-    await AsyncStorage.setItem("token", stateUser.token.authToken);
-  };
-
-  const gotoAdd = async () => {
+  console.log("hat from Sombreros ->", hat);
+  const gotoAdd = () => {
     navigation.navigate("AddHat");
   };
 
-  const gotoRecicle = async () => {
+  const gotoRecicle = () => {
     navigation.navigate("Recicle");
     getHatsRecicle(dispatch);
   };
@@ -50,7 +45,6 @@ const Sombreros = ({ navigation, ...props }) => {
     getHats(dispatch);
     getHatsRecicle(dispatch);
     setArray(hat.slice().reverse());
-    sendUser();
   }, [dispatch]);
 
   console.log("searchField-> ", searchField);
@@ -65,10 +59,18 @@ const Sombreros = ({ navigation, ...props }) => {
     console.log("filteredHats-> ", filteredHats);
   };
 
+  const seeHats = () => {
+    getHats(dispatch);
+    setArray(hat.slice().reverse());
+    setLoading(false);
+  };
+  console.log("array -> ", array);
   return (
     <View style={styles.noteCard}>
       <View style={styles.header}>
-        <Text style={styles.header__text}>Hola Leoncio!</Text>
+        <Text style={styles.header__text}>
+          Hola {stateUser.token.username}!
+        </Text>
         <View style={styles.header__icons}>
           <View style={styles.header__icons__trash}>
             <TouchableOpacity
@@ -106,7 +108,6 @@ const Sombreros = ({ navigation, ...props }) => {
               setActive(true);
             }}
             value={searchField}
-            // onChange={(e) => setSearchField(e.target.value)}
           />
 
           <TouchableOpacity
@@ -150,7 +151,12 @@ const Sombreros = ({ navigation, ...props }) => {
       <ScrollView style={styles.noteCard__scrollView}>
         {loading ? (
           <View style={styles.loader}>
-            <ActivityIndicator size={"large"} color={color.brown} />
+            <ButtonShared
+              title="Ver Sombreros"
+              onPress={seeHats}
+              isValid={true}
+              color={"brown"}
+            />
           </View>
         ) : array.length === 0 ? (
           <View style={styles.noteCard__scrollView__empty}>

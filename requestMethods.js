@@ -1,40 +1,30 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TOKEN } from "./data";
 
-const BASE_URL = "http://192.168.43.56:5000";
+const BASE_URL = "http://192.168.2.43:5000";
 
-const getData = async (key) => {
-  try {
-    const token = await AsyncStorage.getItem(key);
-    if (token !== null) {
-      return token;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+console.log("TOKEN", TOKEN);
 
-const token = getData("token")
-  .then((res) => {
-    return res;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-setTimeout(() => {
-  console.log("token -> ", token._W);
-}, 1000);
-
-const TOKEN = token._W;
-//token es un Promise
 export const publicRequest = axios.create({
   baseURL: BASE_URL,
 });
-// console.log(BASE_URL);
-export const userRequest = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    Authorization: `${TOKEN}`,
+
+axios.defaults.baseURL = "http://192.168.2.43:5000";
+
+const userRequest = axios.create();
+
+userRequest.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = token;
+    }
+    return config;
   },
-});
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export default userRequest;

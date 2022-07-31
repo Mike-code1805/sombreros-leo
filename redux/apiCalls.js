@@ -1,6 +1,4 @@
-// import { loginFailure, loginStart, loginSuccess, singupFailure, singupStart, singupSuccess } from "./userRedux";
-
-import { publicRequest, userRequest } from "../requestMethods";
+import userRequest, { publicRequest } from "../requestMethods";
 import {
   getHatRecicleFailure,
   getHatRecicleStart,
@@ -41,6 +39,7 @@ export const getHats = async (dispatch) => {
   dispatch(getHatStart());
   try {
     const res = await userRequest.get("/api/hat");
+    console.log("RES ->", res);
     dispatch(getHatSuccess(res.data));
   } catch (err) {
     dispatch(getHatFailure());

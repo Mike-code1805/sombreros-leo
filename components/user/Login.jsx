@@ -2,39 +2,35 @@ import { Field } from "formik";
 import { StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/apiCalls";
-import { logout } from "../../redux/userRedux";
 import ButtonShared from "../../shared/button/ButtonShared";
 import { loginSchema } from "../../validationSchema/login.schema";
 import AppForm from "../form/AppForm";
 import AppFormField from "../form/AppFormField";
 import AppFormSubmitButton from "../form/AppFormSubmitButton";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState } from "react";
 import { StackActions } from "@react-navigation/native";
+import { logout } from "../../redux/userRedux";
+import { useState } from "react";
 
 const Login = ({ navigation, ...props }) => {
-  const stateUser = useSelector((state) => state.user.currentUser);
+  const stateUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  // console.log("stateUser:", stateUser);
-
-  const handleOnSubmitToLogin = (values) => {
-    login(dispatch, values);
-    // if (!stateUser.error) {
-    //   try {
-    //     navigation.dispatch(StackActions.replace("Sombreros", stateUser.user));
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+  console.log(stateUser);
+  const handleOnSubmitToLogin = async (values) => {
+    try {
+      await login(dispatch, values);
+      console.log("Hi if:", stateUser);
+      if (!stateUser.error) {
+        navigation.dispatch(StackActions.replace("Welcome"));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleOnGoSubmit = async () => {
-    // dispatch(logout());
-    navigation.navigate("Sombreros");
-    // const date = await AsyncStorage.getItem("token");console.log(date);
+  const handleOnGoSubmit = () => {
+    navigation.navigate("Register");
   };
 
-  // console.log(user.token.authToken)
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Login:</Text>

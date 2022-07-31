@@ -21,6 +21,11 @@ export const hatSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+    clearHats: (state) => {
+      state.hats = [];
+      state.isFetching = false;
+      state.error = false;
+    },
   },
 });
 

@@ -1,4 +1,5 @@
-import { userRequest } from "../requestMethods";
+import userRequest from "../requestMethods";
+
 
 const getHatByIdService = async (id) => {
   try {
