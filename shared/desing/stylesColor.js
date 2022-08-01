@@ -1,5 +1,6 @@
 export const brown = "#83541E";
 export const brown_light = "#906636";
+export const brown_lighter = "#B37245";
 export const red = "#E9060E";
 export const blue = "#0044B2";
 export const green = "#178609";

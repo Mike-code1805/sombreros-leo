@@ -8,8 +8,8 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import * as color from "../../assets/stylesColor";
-import * as font from "../../assets/stylesFontFamily";
+import * as color from "../../shared/desing/stylesColor";
+import * as font from "../../shared/desing/stylesFontFamily";
 import editHatService from "../../services/editHatService";
 import { useDispatch } from "react-redux";
 import getHatByIdService from "../../services/getHatByIdService";

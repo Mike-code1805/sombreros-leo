@@ -9,11 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import * as eva from "@eva-design/eva";
-import * as color from "../../assets/stylesColor";
-import * as font from "../../assets/stylesFontFamily";
-import { ApplicationProvider, Icon, IconRegistry } from "@ui-kitten/components";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import * as color from "../../shared/desing/stylesColor";
+import * as font from "../../shared/desing/stylesFontFamily";
 import { useDispatch, useSelector } from "react-redux";
 import { getHats, getHatsRecicle } from "../../redux/apiCalls";
 import HatContainer from "./HatContainer";
@@ -21,11 +18,13 @@ import getHatByIdService from "../../services/getHatByIdService";
 import deleteHatService from "../../services/deleteHatService";
 import createHatRecicleService from "../../services/hatRecicle/createHatRecicleService";
 import ButtonShared from "../../shared/button/ButtonShared";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 
 const Sombreros = ({ navigation, ...props }) => {
   const hat = useSelector((state) => state.hat.hats);
   const stateUser = useSelector((state) => state.user.currentUser);
   const [loading, setLoading] = useState(true);
+  const [loadingComponent, setLoadingComponent] = useState(false);
   const [searchField, setSearchField] = useState("");
   const [active, setActive] = useState(false);
   const [array, setArray] = useState([]);
@@ -67,255 +66,257 @@ const Sombreros = ({ navigation, ...props }) => {
   console.log("array -> ", array);
   return (
     <View style={styles.noteCard}>
-      <View style={styles.header}>
-        <Text style={styles.header__text}>
-          Hola {stateUser.token.username}!
-        </Text>
-        <View style={styles.header__icons}>
-          <View style={styles.header__icons__trash}>
-            <TouchableOpacity
-              style={styles.header__icons__container}
-              onPress={gotoRecicle}
-            >
-              <IconRegistry icons={EvaIconsPack} />
-              <ApplicationProvider {...eva} theme={eva.light}>
-                <Icon name="trash-2-outline" fill="white" style={styles.icon} />
-              </ApplicationProvider>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.header__icons__plus}>
-            <TouchableOpacity
-              style={styles.header__icons__container}
-              onPress={gotoAdd}
-            >
-              <IconRegistry icons={EvaIconsPack} />
-              <ApplicationProvider {...eva} theme={eva.light}>
-                <Icon name="plus-outline" fill="white" style={styles.icon} />
-              </ApplicationProvider>
-            </TouchableOpacity>
-          </View>
+      {loadingComponent ? (
+        <View style={styles.loader}>
+          <ActivityIndicator size={"large"} color={color.brown} />
         </View>
-      </View>
-      <Text style={styles.noteCard__text}>Total: {array.length}</Text>
-      <View style={styles.noteCard__divider} />
-      <View style={styles.noteCard__search}>
-        <View style={styles.noteCard__search__input__container}>
-          <TextInput
-            placeholder="Buscar..."
-            style={styles.noteCard__search__input}
-            onChangeText={(text) => {
-              setSearchField(text);
-              setActive(true);
-            }}
-            value={searchField}
-          />
-
-          <TouchableOpacity
-            style={styles.noteCard__search__button}
-            onPress={() => {
-              setActive(false);
-              setSearchField("");
-              setArray(hat.slice().reverse());
-            }}
-          >
+      ) : (
+        <>
+          <View style={styles.header}>
             <Text
-              style={
-                active
-                  ? styles.noteCard__search__button__text__active
-                  : styles.noteCard__search__button__text__inactive
-              }
+              style={styles.header__text}
+              onPress={() => navigation.navigate("Profile")}
             >
-              X
+              Hola {stateUser.token.username}!
             </Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          style={styles.noteCard__search__container}
-          onPress={handlePressSearch}
-        >
-          <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={eva.light}>
-            <Icon name="search" fill="white" style={styles.icon} />
-          </ApplicationProvider>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.noteCard__search__container}
-          onPress={() => getHats(dispatch)}
-        >
-          <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={eva.light}>
-            <Icon name="refresh-outline" fill="white" style={styles.icon} />
-          </ApplicationProvider>
-        </TouchableOpacity>
-      </View>
-      <ScrollView style={styles.noteCard__scrollView}>
-        {loading ? (
-          <View style={styles.loader}>
-            <ButtonShared
-              title="Ver Sombreros"
-              onPress={seeHats}
-              isValid={true}
-              color={"brown"}
-            />
+            <View style={styles.header__icons}>
+              <View style={styles.header__icons__trash}>
+                <TouchableOpacity
+                  style={styles.header__icons__container}
+                  onPress={gotoRecicle}
+                >
+                  <MaterialIcons name="delete" size={25} style={styles.icon} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.header__icons__plus}>
+                <TouchableOpacity
+                  style={styles.header__icons__container}
+                  onPress={gotoAdd}
+                >
+                  <AntDesign name="plus" size={25} style={styles.icon} />
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        ) : array.length === 0 ? (
-          <View style={styles.noteCard__scrollView__empty}>
-            <Text style={styles.noteCard__scrollView__empty__text}>
-              No hay sombreros aún!
-            </Text>
+          <Text style={styles.noteCard__text}>Total: {hat.length}</Text>
+          <View style={styles.noteCard__divider} />
+          <View style={styles.noteCard__search}>
+            <View style={styles.noteCard__search__input__container}>
+              <TextInput
+                placeholder="Buscar..."
+                style={styles.noteCard__search__input}
+                onChangeText={(text) => {
+                  setSearchField(text);
+                  setActive(true);
+                }}
+                value={searchField}
+              />
+
+              <TouchableOpacity
+                style={styles.noteCard__search__button}
+                onPress={() => {
+                  setActive(false);
+                  setSearchField("");
+                  setArray(hat.slice().reverse());
+                }}
+              >
+                <Text
+                  style={
+                    active
+                      ? styles.noteCard__search__button__text__active
+                      : styles.noteCard__search__button__text__inactive
+                  }
+                >
+                  X
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.noteCard__search__container}
+              onPress={handlePressSearch}
+            >
+              <AntDesign name="search1" size={25} style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.noteCard__search__container}
+              onPress={() => {
+                getHats(dispatch);
+                setArray(hat.slice().reverse());
+              }}
+            >
+              <MaterialIcons name="refresh" size={25} style={styles.icon} />
+            </TouchableOpacity>
           </View>
-        ) : (
-          array.map((item, index) =>
-            item.state_payment == "p" && item.pendiente == true ? (
-              <HatContainer
-                key={item._id}
-                state={"Pendiente"}
-                index={index}
-                name={item.name}
-                date={item.date}
-                onPressMirar={async () => {
-                  try {
-                    navigation.navigate("DetailsHat");
-                    const res = await getHatByIdService(item._id);
-                    props.setIsDone(item.pendiente);
-                    props.setIsPay(item.state_payment);
-                    props.setDataCalled(res.data);
-                    props.setId(item._id);
-                    props.setLoading(false);
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-                onPressDelete={async () => {
-                  try {
-                    Alert.alert(
-                      "Borrar sombrero",
-                      "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
-                      [
-                        {
-                          text: "No",
-                          onPress: () => console.log("cancelado"),
-                          style: "cancel",
-                        },
-                        {
-                          text: "Si",
-                          onPress: async () => {
-                            const res = await getHatByIdService(item._id);
-                            await createHatRecicleService(res.data.hat);
-                            await deleteHatService(item._id);
-                            getHats(dispatch);
-                            navigation.navigate("Sombreros");
-                          },
-                        },
-                      ]
-                    );
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-              />
-            ) : item.state_payment == "p" && item.pendiente == false ? (
-              <HatContainer
-                key={item._id}
-                state={"Trabajado"}
-                color={"yellow"}
-                index={index}
-                name={item.name}
-                date={item.date}
-                onPressMirar={async () => {
-                  try {
-                    navigation.navigate("DetailsHat");
-                    props.setIsDone(item.pendiente);
-                    props.setIsPay(item.state_payment);
-                    props.setId(item._id);
-                    const res = await getHatByIdService(item._id);
-                    props.setDataCalled(res.data);
-                    props.setLoading(false);
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-                onPressDelete={async () => {
-                  try {
-                    Alert.alert(
-                      "Borrar sombrero",
-                      "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
-                      [
-                        {
-                          text: "No",
-                          onPress: () => console.log("cancelado"),
-                          style: "cancel",
-                        },
-                        {
-                          text: "Si",
-                          onPress: async () => {
-                            const res = await getHatByIdService(item._id);
-                            await createHatRecicleService(res.data.hat);
-                            await deleteHatService(item._id);
-                            getHats(dispatch);
-                            navigation.navigate("Sombreros");
-                          },
-                        },
-                      ]
-                    );
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-              />
+          <ScrollView style={styles.noteCard__scrollView}>
+            {loading ? (
+              <View style={styles.loaderHats}>
+                <ButtonShared
+                  title="Ver Sombreros"
+                  onPress={seeHats}
+                  isValid={true}
+                  color={"blue"}
+                />
+              </View>
+            ) : array.length === 0 ? (
+              <View style={styles.noteCard__scrollView__empty}>
+                <Text style={styles.noteCard__scrollView__empty__text}>
+                  No hay sombreros aún!
+                </Text>
+              </View>
             ) : (
-              <HatContainer
-                key={item._id}
-                state={"Cancelado"}
-                color={"green"}
-                index={index}
-                name={item.name}
-                date={item.date}
-                onPressMirar={async () => {
-                  try {
-                    navigation.navigate("DetailsHat");
-                    const res = await getHatByIdService(item._id);
-                    props.setIsDone(item.pendiente);
-                    props.setIsPay(item.state_payment);
-                    props.setDataCalled(res.data);
-                    props.setId(item._id);
-                    props.setLoading(false);
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-                onPressDelete={async () => {
-                  try {
-                    Alert.alert(
-                      "Borrar sombrero",
-                      "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
-                      [
-                        {
-                          text: "No",
-                          onPress: () => console.log("cancelado"),
-                          style: "cancel",
-                        },
-                        {
-                          text: "Si",
-                          onPress: async () => {
-                            const res = await getHatByIdService(item._id);
-                            await createHatRecicleService(res.data.hat);
-                            await deleteHatService(item._id);
-                            getHats(dispatch);
-                            navigation.navigate("Sombreros");
-                          },
-                        },
-                      ]
-                    );
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-              />
-            )
-          )
-        )}
-      </ScrollView>
+              array.map((item, index) =>
+                item.state_payment == "p" && item.pendiente == true ? (
+                  <HatContainer
+                    key={item._id}
+                    state={"Pendiente"}
+                    index={index}
+                    name={item.name}
+                    date={item.date}
+                    onPressMirar={async () => {
+                      try {
+                        navigation.navigate("DetailsHat");
+                        const res = await getHatByIdService(item._id);
+                        props.setIsDone(item.pendiente);
+                        props.setIsPay(item.state_payment);
+                        props.setDataCalled(res.data);
+                        props.setId(item._id);
+                        props.setLoading(false);
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                    onPressDelete={async () => {
+                      try {
+                        Alert.alert(
+                          "Borrar sombrero",
+                          "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
+                          [
+                            {
+                              text: "No",
+                              onPress: () => console.log("cancelado"),
+                              style: "cancel",
+                            },
+                            {
+                              text: "Si",
+                              onPress: async () => {
+                                const res = await getHatByIdService(item._id);
+                                await createHatRecicleService(res.data.hat);
+                                await deleteHatService(item._id);
+                                getHats(dispatch);
+                                navigation.navigate("Sombreros");
+                              },
+                            },
+                          ]
+                        );
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                  />
+                ) : item.state_payment == "p" && item.pendiente == false ? (
+                  <HatContainer
+                    key={item._id}
+                    state={"Trabajado"}
+                    color={"yellow"}
+                    index={index}
+                    name={item.name}
+                    date={item.date}
+                    onPressMirar={async () => {
+                      try {
+                        navigation.navigate("DetailsHat");
+                        props.setIsDone(item.pendiente);
+                        props.setIsPay(item.state_payment);
+                        props.setId(item._id);
+                        const res = await getHatByIdService(item._id);
+                        props.setDataCalled(res.data);
+                        props.setLoading(false);
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                    onPressDelete={async () => {
+                      try {
+                        Alert.alert(
+                          "Borrar sombrero",
+                          "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
+                          [
+                            {
+                              text: "No",
+                              onPress: () => console.log("cancelado"),
+                              style: "cancel",
+                            },
+                            {
+                              text: "Si",
+                              onPress: async () => {
+                                const res = await getHatByIdService(item._id);
+                                await createHatRecicleService(res.data.hat);
+                                await deleteHatService(item._id);
+                                getHats(dispatch);
+                                navigation.navigate("Sombreros");
+                              },
+                            },
+                          ]
+                        );
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                  />
+                ) : (
+                  <HatContainer
+                    key={item._id}
+                    state={"Cancelado"}
+                    color={"green"}
+                    index={index}
+                    name={item.name}
+                    date={item.date}
+                    onPressMirar={async () => {
+                      try {
+                        navigation.navigate("DetailsHat");
+                        const res = await getHatByIdService(item._id);
+                        props.setIsDone(item.pendiente);
+                        props.setIsPay(item.state_payment);
+                        props.setDataCalled(res.data);
+                        props.setId(item._id);
+                        props.setLoading(false);
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                    onPressDelete={async () => {
+                      try {
+                        Alert.alert(
+                          "Borrar sombrero",
+                          "¿Estás seguro que deseas llevar el sombrero a la papelera de reciclaje?",
+                          [
+                            {
+                              text: "No",
+                              onPress: () => console.log("cancelado"),
+                              style: "cancel",
+                            },
+                            {
+                              text: "Si",
+                              onPress: async () => {
+                                const res = await getHatByIdService(item._id);
+                                await createHatRecicleService(res.data.hat);
+                                await deleteHatService(item._id);
+                                getHats(dispatch);
+                                navigation.navigate("Sombreros");
+                              },
+                            },
+                          ]
+                        );
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                  />
+                )
+              )
+            )}
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 };
@@ -323,6 +324,12 @@ const Sombreros = ({ navigation, ...props }) => {
 export default Sombreros;
 
 const styles = StyleSheet.create({
+  loader: {
+    padding: 100,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   noteCard: {
     padding: 10,
     marginBottom: 40,
@@ -428,6 +435,7 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     marginBottom: "auto",
     fontFamily: font.font,
+    textDecorationLine: "underline",
   },
   header__icons: {
     flexDirection: "row",
@@ -455,6 +463,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: 25,
     height: 25,
+    color: color.white,
   },
   noteCard__scrollView: {
     marginBottom: 50,
@@ -469,8 +478,8 @@ const styles = StyleSheet.create({
     color: color.brown,
     fontFamily: font.font,
   },
-  loader: {
-    padding: 100,
+  loaderHats: {
+    paddingVertical: 130,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

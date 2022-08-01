@@ -6,8 +6,8 @@ import { Field } from "formik";
 import AppFormField from "../form/AppFormField";
 import AppFormSubmitButton from "../form/AppFormSubmitButton";
 import ButtonShared from "../../shared/button/ButtonShared";
-import * as color from "../../assets/stylesColor";
-import * as font from "../../assets/stylesFontFamily";
+import * as color from "../../shared/desing/stylesColor";
+import * as font from "../../shared/desing/stylesFontFamily";
 import { useDispatch } from "react-redux";
 import { getHats } from "../../redux/apiCalls";
 import { format } from "date-fns";
@@ -59,8 +59,8 @@ const AddHat = ({ navigation, ...props }) => {
           color_tape: "",
           size: "",
           state: "",
-          price: "",
-          advancement: "",
+          price: "0",
+          advancement: "0",
           address: "",
           observations: "",
           state_payment: "",

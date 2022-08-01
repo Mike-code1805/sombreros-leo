@@ -1,39 +1,54 @@
 import { Field } from "formik";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import ButtonShared from "../../shared/button/ButtonShared";
 import { registerSchema } from "../../validationSchema/register.schema";
 import AppForm from "../form/AppForm";
 import AppFormField from "../form/AppFormField";
 import AppFormSubmitButton from "../form/AppFormSubmitButton";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { register } from "../../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/userRedux";
 
 const Register = ({ navigation, ...props }) => {
-  // const state = useSelector(selectUsers);
-  // const dispatch = useDispatch();
+  const stateUser = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  // const handleOnSubmitToRegister = async (values: any) => {
-  //   await register(dispatch, values);
-  //   if (!state.error) {
-  //     try {
-  //       navigation.navigate("Pagination");
-  //     } catch (error) {}
-  //   }
-  // };
+  const handleOnSubmitToRegister = async (values) => {
+    try {
+      await register(dispatch, values);
+      if (!stateUser.error) {
+        Alert.alert("Éxito", "El usuario se ha creado exitósamente", [
+          {
+            text: "Ok",
+            onPress: () => {
+              
+              navigation.navigate("Login");
+            },
+          },
+        ]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOnGoLogin = () => {
+    navigation.navigate("Login");
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Registro:</Text>
       <AppForm
         initialValues={{
-          name: "",
+          username: "",
           email: "",
           password: "",
-          confirmPassword: "",
+          passwordConfirmation: "",
         }}
         validationSchema={registerSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleOnSubmitToRegister}
       >
-        <Field component={AppFormField} name="name" placeholder="Nombre" />
+        <Field component={AppFormField} name="username" placeholder="Nombre" />
         <Field
           component={AppFormField}
           name="email"
@@ -51,7 +66,7 @@ const Register = ({ navigation, ...props }) => {
         />
         <Field
           component={AppFormField}
-          name="confirmPassword"
+          name="passwordConfirmation"
           placeholder="Confirmar Contraseña"
           secureTextEntry
           textContentType="password"
@@ -60,7 +75,7 @@ const Register = ({ navigation, ...props }) => {
       </AppForm>
       <ButtonShared
         title="Ir al Login"
-        onPress={() => navigation.navigate("Login")}
+        onPress={handleOnGoLogin}
         isValid={true}
       />
     </View>

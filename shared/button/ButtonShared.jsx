@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import * as color from "../../assets/stylesColor";
+import * as color from "../desing/stylesColor";
 
 const ButtonShared = ({ title, onPress, isValid = true, color }) => {
   return (

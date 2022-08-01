@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useFormikContext } from "formik";
 import { Text } from "react-native";
-import * as color from "../../assets/stylesColor"
+import * as color from "../../shared/desing/stylesColor"
 
 const styles = StyleSheet.create({
   container: {

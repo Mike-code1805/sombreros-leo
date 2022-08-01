@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import * as color from "../../assets/stylesColor";
-import * as font from "../../assets/stylesFontFamily";
+import * as color from "../../shared/desing/stylesColor";
+import * as font from "../../shared/desing/stylesFontFamily";
 
 const AppFormField = (props) => {
   const {

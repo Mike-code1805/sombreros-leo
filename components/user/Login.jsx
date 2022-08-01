@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Field } from "formik";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/apiCalls";
 import ButtonShared from "../../shared/button/ButtonShared";
@@ -8,18 +9,31 @@ import AppForm from "../form/AppForm";
 import AppFormField from "../form/AppFormField";
 import AppFormSubmitButton from "../form/AppFormSubmitButton";
 import { StackActions } from "@react-navigation/native";
-import { logout } from "../../redux/userRedux";
-import { useState } from "react";
 
 const Login = ({ navigation, ...props }) => {
   const stateUser = useSelector((state) => state.user);
+  const [userState, setUserState] = useState(true);
   const dispatch = useDispatch();
-  console.log(stateUser);
+  console.log("stateUser->", stateUser);
+  
   const handleOnSubmitToLogin = async (values) => {
     try {
       await login(dispatch, values);
-      console.log("Hi if:", stateUser);
-      if (!stateUser.error) {
+      if (userState) {
+        Alert.alert(
+          "Error",
+          "Verifique que el usuario o la contraseña estén correctos",
+          [
+            {
+              text: "Ok",
+              style: "cancel",
+            },
+          ]
+        );
+      }
+      setUserState(stateUser.error);
+      if (!userState) {
+        setUserState(stateUser.error);
         navigation.dispatch(StackActions.replace("Welcome"));
       }
     } catch (error) {

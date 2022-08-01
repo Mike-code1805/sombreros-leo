@@ -7,8 +7,8 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import * as color from "../../assets/stylesColor";
-import * as font from "../../assets/stylesFontFamily";
+import * as color from "../../shared/desing/stylesColor";
+import * as font from "../../shared/desing/stylesFontFamily";
 import { useDispatch, useSelector } from "react-redux";
 import HatContainer from "../hats/HatContainer";
 import getHatRecicleByIdService from "../../services/hatRecicle/getHatRecicleByIdService";
