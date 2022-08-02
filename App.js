@@ -1,17 +1,14 @@
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import Login from './screens/Login';
-
-const Stack = createNativeStackNavigator();
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./redux/store";
+import { MainRouter } from "./routes/MainRouter";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <MainRouter />
+      </PersistGate>
+    </Provider>
   );
 }

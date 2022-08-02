@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useFormikContext } from "formik";
 import { Text } from "react-native";
+import * as color from "../../shared/desing/stylesColor"
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "#83541E",
+    backgroundColor: color.green,
     width: "65%",
     marginLeft: "auto",
     marginRight: "auto",

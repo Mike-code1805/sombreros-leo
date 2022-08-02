@@ -1,7 +1,9 @@
+.env
 node_modules/
 .expo/
 dist/
 npm-debug.*
+*.env
 *.jks
 *.p8
 *.p12
@@ -9,6 +11,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-
 # macOS
 .DS_Store
+Rutinas sombreros leo.docx
