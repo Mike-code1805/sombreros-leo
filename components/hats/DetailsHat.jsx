@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,8 +13,6 @@ import editHatService from "../../services/editHatService";
 import { useDispatch } from "react-redux";
 import getHatByIdService from "../../services/getHatByIdService";
 import { getHats } from "../../redux/apiCalls";
-import deleteHatService from "../../services/deleteHatService";
-import createHatRecicleService from "../../services/hatRecicle/createHatRecicleService";
 
 const DetailsHat = ({ navigation, ...props }) => {
   const dispatch = useDispatch();
@@ -51,35 +48,6 @@ const DetailsHat = ({ navigation, ...props }) => {
     }
   };
 
-  const onPressDelete = async () => {
-    try {
-      Alert.alert(
-        "Borrar sombrero",
-        "¿Estás seguro que llevar el sombrero a la papelera de reciclaje?",
-        [
-          {
-            text: "No",
-            onPress: () => console.log("cancelado"),
-            style: "cancel",
-          },
-          {
-            text: "Si",
-            onPress: async () => {
-              const resHat = await getHatByIdService(props.id);
-              await createHatRecicleService(resHat.data.hat);
-              const res = await deleteHatService(props.id);
-              console.log(res.data);
-              getHats(dispatch);
-              navigation.navigate("Sombreros");
-              console.log("Borrado");
-            },
-          },
-        ]
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <ScrollView style={styles.details}>
       {props.loading ? (
@@ -209,12 +177,6 @@ const DetailsHat = ({ navigation, ...props }) => {
           onPress={onPressPendiente}
         >
           <Text style={styles.detailsButtons__style__text}>Trabajado</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.prdetailsButtons__delete}
-          onPress={onPressDelete}
-        >
-          <Text style={styles.detailsButtons__style__text}>Eliminar</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

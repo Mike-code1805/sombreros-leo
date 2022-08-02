@@ -14,12 +14,15 @@ const Login = ({ navigation, ...props }) => {
   const stateUser = useSelector((state) => state.user);
   const [userState, setUserState] = useState(true);
   const dispatch = useDispatch();
-  console.log("stateUser->", stateUser);
-  
+
   const handleOnSubmitToLogin = async (values) => {
     try {
       await login(dispatch, values);
-      if (userState) {
+      setUserState(stateUser.error);
+      if (!userState) {
+        setUserState(stateUser.error);
+        navigation.dispatch(StackActions.replace("Welcome"));
+      } else {
         Alert.alert(
           "Error",
           "Verifique que el usuario o la contraseña estén correctos",
@@ -27,14 +30,10 @@ const Login = ({ navigation, ...props }) => {
             {
               text: "Ok",
               style: "cancel",
+              onPress: () => setUserState(stateUser.error),
             },
           ]
         );
-      }
-      setUserState(stateUser.error);
-      if (!userState) {
-        setUserState(stateUser.error);
-        navigation.dispatch(StackActions.replace("Welcome"));
       }
     } catch (error) {
       console.log(error);

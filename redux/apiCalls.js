@@ -20,8 +20,8 @@ export const login = async (dispatch, user) => {
     const res = await publicRequest.post("/api/auth/login", user);
     dispatch(loginSuccess(res.data));
   } catch (err) {
-    console.log("err->", err);
     dispatch(loginFailure());
+    return err;
   }
 };
 
@@ -39,7 +39,6 @@ export const getHats = async (dispatch) => {
   dispatch(getHatStart());
   try {
     const res = await userRequest.get("/api/hat");
-    console.log("RES ->", res);
     dispatch(getHatSuccess(res.data));
   } catch (err) {
     dispatch(getHatFailure());
@@ -52,6 +51,7 @@ export const getHatsRecicle = async (dispatch) => {
     const res = await userRequest.get("/api/hatRecicle");
     dispatch(getHatRecicleSuccess(res.data));
   } catch (err) {
+    console.log(JSON.stringify(err.message));
     dispatch(getHatRecicleFailure());
   }
 };

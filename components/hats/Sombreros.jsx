@@ -29,7 +29,6 @@ const Sombreros = ({ navigation, ...props }) => {
   const [active, setActive] = useState(false);
   const [array, setArray] = useState([]);
 
-  console.log("hat from Sombreros ->", hat);
   const gotoAdd = () => {
     navigation.navigate("AddHat");
   };
@@ -44,9 +43,9 @@ const Sombreros = ({ navigation, ...props }) => {
     getHats(dispatch);
     getHatsRecicle(dispatch);
     setArray(hat.slice().reverse());
+    setLoading(true);
   }, [dispatch]);
 
-  console.log("searchField-> ", searchField);
   const handlePressSearch = () => {
     const filteredHats = array.filter((item) => {
       return (
@@ -55,7 +54,6 @@ const Sombreros = ({ navigation, ...props }) => {
       );
     });
     setArray(filteredHats);
-    console.log("filteredHats-> ", filteredHats);
   };
 
   const seeHats = () => {
@@ -63,7 +61,7 @@ const Sombreros = ({ navigation, ...props }) => {
     setArray(hat.slice().reverse());
     setLoading(false);
   };
-  console.log("array -> ", array);
+
   return (
     <View style={styles.noteCard}>
       {loadingComponent ? (
@@ -140,7 +138,6 @@ const Sombreros = ({ navigation, ...props }) => {
             <TouchableOpacity
               style={styles.noteCard__search__container}
               onPress={() => {
-                getHats(dispatch);
                 setArray(hat.slice().reverse());
               }}
             >
@@ -199,11 +196,11 @@ const Sombreros = ({ navigation, ...props }) => {
                             {
                               text: "Si",
                               onPress: async () => {
+                                setLoading(true);
                                 const res = await getHatByIdService(item._id);
                                 await createHatRecicleService(res.data.hat);
                                 await deleteHatService(item._id);
                                 getHats(dispatch);
-                                navigation.navigate("Sombreros");
                               },
                             },
                           ]
@@ -248,11 +245,11 @@ const Sombreros = ({ navigation, ...props }) => {
                             {
                               text: "Si",
                               onPress: async () => {
+                                setLoading(true);
                                 const res = await getHatByIdService(item._id);
                                 await createHatRecicleService(res.data.hat);
                                 await deleteHatService(item._id);
                                 getHats(dispatch);
-                                navigation.navigate("Sombreros");
                               },
                             },
                           ]
@@ -297,11 +294,11 @@ const Sombreros = ({ navigation, ...props }) => {
                             {
                               text: "Si",
                               onPress: async () => {
+                                setLoading(true);
                                 const res = await getHatByIdService(item._id);
                                 await createHatRecicleService(res.data.hat);
                                 await deleteHatService(item._id);
                                 getHats(dispatch);
-                                navigation.navigate("Sombreros");
                               },
                             },
                           ]

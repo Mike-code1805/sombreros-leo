@@ -7,7 +7,6 @@ import AppFormField from "../form/AppFormField";
 import AppFormSubmitButton from "../form/AppFormSubmitButton";
 import { register } from "../../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/userRedux";
 
 const Register = ({ navigation, ...props }) => {
   const stateUser = useSelector((state) => state.user);

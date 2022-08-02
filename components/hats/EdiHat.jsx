@@ -49,7 +49,7 @@ const EdiHat = ({ navigation, ...props }) => {
         address: values.address,
         observations: values.observations,
         state_payment: values.state_payment,
-        date: format(new Date(), "yyyy-MM-dd, H:mma"),
+        date: values.date,
         pendiente: true,
       };
       await editHatService(props.id, objectToSent);
@@ -59,7 +59,6 @@ const EdiHat = ({ navigation, ...props }) => {
       navigation.navigate("DetailsHat");
     }
   };
-  console.log(props.id);
   return (
     <ScrollView style={styles.addHat}>
       <AppForm

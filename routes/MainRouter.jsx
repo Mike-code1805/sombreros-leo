@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Sombreros from "../components/hats/Sombreros";
 import AddHat from "../components/hats/AddHat";

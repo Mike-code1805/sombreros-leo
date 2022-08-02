@@ -1,10 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { TOKEN } from "./data";
 
 const BASE_URL = "http://192.168.2.43:5000";
-
-console.log("TOKEN", TOKEN);
 
 export const publicRequest = axios.create({
   baseURL: BASE_URL,

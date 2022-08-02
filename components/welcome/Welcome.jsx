@@ -12,15 +12,12 @@ import * as font from "../../shared/desing/stylesFontFamily";
 const Welcome = ({ navigation }) => {
   const stateUserAuth = useSelector((state) => state.user.currentUser);
 
-  console.log("stateUserAuth-> ", stateUserAuth);
   useEffect(() => {
     sendUser();
   }, []);
   const sendUser = async () => {
-    console.log("sendUser");
     await AsyncStorage.setItem("token", stateUserAuth.token.authToken);
   };
-  console.log("stateUserAuth-> ", stateUserAuth);
 
   const handleOnGoSubmitGo = () => {
     navigation.dispatch(StackActions.replace("Sombreros"));
