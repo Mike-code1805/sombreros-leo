@@ -1,13 +1,14 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PORT__DATA } from '@env'
 
-const BASE_URL = "https://sombreros-leo-backend.herokuapp.com/";
+const BASE_URL = PORT__DATA;
 
 export const publicRequest = axios.create({
   baseURL: BASE_URL,
 });
 
-axios.defaults.baseURL = "https://sombreros-leo-backend.herokuapp.com/";
+axios.defaults.baseURL = PORT__DATA;
 
 const userRequest = axios.create();
 
