@@ -1,5 +1,5 @@
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import AppForm from "../form/AppForm";
 import { hatSchema } from "../../validationSchema/hat.schema";
 import { Field } from "formik";
@@ -12,14 +12,20 @@ import { useDispatch } from "react-redux";
 import { getHats } from "../../redux/apiCalls";
 import { format } from "date-fns";
 import createHatService from "../../services/createHatService";
+import NetInfo from "@react-native-community/netinfo";
 
 const AddHat = ({ navigation, ...props }) => {
   const dispatch = useDispatch();
+  const [network, setNetwork] = useState(false);
 
+  NetInfo.fetch().then((state) => {
+    setNetwork(state.isConnected);
+  });
+  
   const handleOnSubmitToAdd = async (values) => {
     if (values.name === "") {
       Alert.alert("Por favor escribe algo");
-    } else {
+    } else if (network) {
       const objectToSent = {
         name: values.name,
         color_hat: values.color_hat,
@@ -40,6 +46,8 @@ const AddHat = ({ navigation, ...props }) => {
       await createHatService(objectToSent);
       getHats(dispatch);
       navigation.navigate("Sombreros");
+    } else if (!network) {
+      Alert.alert("Usted no está conectado a internet");
     }
   };
 
