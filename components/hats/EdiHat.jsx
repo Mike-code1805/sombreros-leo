@@ -55,6 +55,8 @@ const EdiHat = ({ navigation, ...props }) => {
       await editHatService(props.id, objectToSent);
       const res = await getHatByIdService(props.id);
       props.setDataCalled(res.data);
+      props.setIsDone(res.data.hat.pendiente);
+      props.setIsPay(res.data.hat.state_payment);
       getHats(dispatch);
       navigation.navigate("DetailsHat");
     }
