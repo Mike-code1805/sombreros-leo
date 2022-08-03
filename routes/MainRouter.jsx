@@ -107,6 +107,8 @@ export const MainRouter = ({ navigation }) => {
                   id={id}
                   dataCalled={dataCalled}
                   setDataCalled={setDataCalled}
+                  setIsDone={setIsDone}
+                  setIsPay={setIsPay}
                   isDone={isDone}
                   isPay={isPay}
                 />
