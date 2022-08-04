@@ -1,5 +1,5 @@
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import AppForm from "../form/AppForm";
 import { Field } from "formik";
 import AppFormField from "../form/AppFormField";
@@ -8,14 +8,19 @@ import ButtonShared from "../../shared/button/ButtonShared";
 import { hatSchema } from "../../validationSchema/hat.schema";
 import * as color from "../../shared/desing/stylesColor";
 import * as font from "../../shared/desing/stylesFontFamily";
-import { format } from "date-fns";
 import getHatByIdService from "../../services/getHatByIdService";
 import editHatService from "../../services/editHatService";
 import { useDispatch } from "react-redux";
 import { getHats } from "../../redux/apiCalls";
+import NetInfo from "@react-native-community/netinfo";
 
 const EdiHat = ({ navigation, ...props }) => {
   const dispatch = useDispatch();
+  const [network, setNetwork] = useState(false);
+
+  NetInfo.fetch().then((state) => {
+    setNetwork(state.isConnected);
+  });
 
   const handleOnSubmitToEdit = async (values) => {
     if (
@@ -34,7 +39,7 @@ const EdiHat = ({ navigation, ...props }) => {
       values.state_payment === props.dataCalled.hat.state_payment
     ) {
       Alert.alert("Por favor escriba lo que desea editar");
-    } else {
+    } else if (network) {
       const objectToSent = {
         name: values.name,
         color_hat: values.color_hat,
@@ -59,6 +64,8 @@ const EdiHat = ({ navigation, ...props }) => {
       props.setIsPay(res.data.hat.state_payment);
       getHats(dispatch);
       navigation.navigate("DetailsHat");
+    } else if (!network) {
+      Alert.alert("Usted no está conectado a internet");
     }
   };
   return (

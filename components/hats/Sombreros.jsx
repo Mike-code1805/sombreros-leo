@@ -19,6 +19,7 @@ import deleteHatService from "../../services/deleteHatService";
 import createHatRecicleService from "../../services/hatRecicle/createHatRecicleService";
 import ButtonShared from "../../shared/button/ButtonShared";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import NetInfo from "@react-native-community/netinfo";
 
 const Sombreros = ({ navigation, ...props }) => {
   const hat = useSelector((state) => state.hat.hats);
@@ -28,6 +29,11 @@ const Sombreros = ({ navigation, ...props }) => {
   const [searchField, setSearchField] = useState("");
   const [active, setActive] = useState(false);
   const [array, setArray] = useState([]);
+  const [network, setNetwork] = useState(false);
+
+  NetInfo.fetch().then((state) => {
+    setNetwork(state.isConnected);
+  });
 
   const gotoAdd = () => {
     navigation.navigate("AddHat");
@@ -196,11 +202,17 @@ const Sombreros = ({ navigation, ...props }) => {
                             {
                               text: "Si",
                               onPress: async () => {
-                                setLoading(true);
-                                const res = await getHatByIdService(item._id);
-                                await createHatRecicleService(res.data.hat);
-                                await deleteHatService(item._id);
-                                getHats(dispatch);
+                                if (network) {
+                                  setLoading(true);
+                                  const res = await getHatByIdService(item._id);
+                                  await createHatRecicleService(res.data.hat);
+                                  await deleteHatService(item._id);
+                                  getHats(dispatch);
+                                } else {
+                                  Alert.alert(
+                                    "Usted no está conectado a internet"
+                                  );
+                                }
                               },
                             },
                           ]
@@ -245,11 +257,17 @@ const Sombreros = ({ navigation, ...props }) => {
                             {
                               text: "Si",
                               onPress: async () => {
-                                setLoading(true);
-                                const res = await getHatByIdService(item._id);
-                                await createHatRecicleService(res.data.hat);
-                                await deleteHatService(item._id);
-                                getHats(dispatch);
+                                if (network) {
+                                  setLoading(true);
+                                  const res = await getHatByIdService(item._id);
+                                  await createHatRecicleService(res.data.hat);
+                                  await deleteHatService(item._id);
+                                  getHats(dispatch);
+                                } else {
+                                  Alert.alert(
+                                    "Usted no está conectado a internet"
+                                  );
+                                }
                               },
                             },
                           ]
@@ -294,11 +312,17 @@ const Sombreros = ({ navigation, ...props }) => {
                             {
                               text: "Si",
                               onPress: async () => {
-                                setLoading(true);
-                                const res = await getHatByIdService(item._id);
-                                await createHatRecicleService(res.data.hat);
-                                await deleteHatService(item._id);
-                                getHats(dispatch);
+                                if (network) {
+                                  setLoading(true);
+                                  const res = await getHatByIdService(item._id);
+                                  await createHatRecicleService(res.data.hat);
+                                  await deleteHatService(item._id);
+                                  getHats(dispatch);
+                                } else {
+                                  Alert.alert(
+                                    "Usted no está conectado a internet"
+                                  );
+                                }
                               },
                             },
                           ]
