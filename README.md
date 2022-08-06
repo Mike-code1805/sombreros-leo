@@ -14,4 +14,4 @@ This steps are I have done by this project:
 Run project:<br>
 
     npm install
-    npm start:dev
+    npm start
