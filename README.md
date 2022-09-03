@@ -15,3 +15,5 @@ Run project:<br>
 
     npm install
     npm start
+
+Version 2, coming soon...
