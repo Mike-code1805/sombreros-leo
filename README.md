@@ -17,3 +17,5 @@ Run project:<br>
     npm start
 
 Version 2, coming soon...
+
+Soon V 2.0.0
